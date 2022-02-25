@@ -7,6 +7,13 @@
 
 WINDOW *skills = NULL;
 
+const char *STR = "Str";
+const char *DEX = "Dex";
+const char *CON = "Con";
+const char *INT = "Int";
+const char *WIS = "Wis";
+const char *CHA = "Cha";
+
 /* Prototypes */
 static int calcSkillMod(int score);
 static void initMod();
@@ -94,112 +101,45 @@ static void initMod()
 
 static void initAbil()
 {
-  char *abils[18] = {"Acrobatics", "Animal Handling", "Arcana",
-                     "Athletics", "Deception", "History",
-                     "Insight", "Intimidation", "Investigation",
-                     "Medicine", "Nature", "Perception",
-                     "Performance", "Persuasion", "Religion",
-                     "Sleight of Hand", "Stealth", "Survival"};
+  int i, r, c;
+  short color;
+  const char *abils[36] = 
+    {"Acrobatics", DEX, "Animal Handling", WIS,
+     "Arcana", INT, "Athletics", STR, 
+     "Deception", CHA, "History", INT,
+     "Insight", WIS, "Intimidation", CHA,
+     "Investigation", INT, "Medicine", WIS,
+     "Nature", INT, "Perception", WIS,
+     "Performance", CHA, "Persuasion", CHA,
+     "Religion", INT, "Sleight of Hand", DEX,
+     "Stealth", DEX, "Survival", WIS};
 
   NBOX bAbil = {8, 78, 8, 2, "Skills", NULL, NULL, 0};
   namedBox(skills, bAbil);
 
-  mvwaddstr(skills, 9, 4, "   Acrobatics");
-  wattron(skills, COLOR_PAIR(1));
-  mvwaddstr(skills, 9, 23, "(Dex)");
-  wattroff(skills, COLOR_PAIR(1));
+  for (i = 0; i < 18; i++) {
+    r = (i % 6) + 9;
+    c = (i / 6) * 25 + 4;
+    color = 0;
+    mvwprintw(skills, r, c, "   %s", abils[i*2]);
 
-  mvwaddstr(skills, 10, 4, "   Animal Handling");
-  wattron(skills, COLOR_PAIR(6));
-  mvwaddstr(skills, 10, 23, "(Wis)");
-  wattroff(skills, COLOR_PAIR(6));
+    if (abils[i*2+1] == STR)
+      color = COLOR_PAIR(4);
+    else if (abils[i*2+1] == DEX)
+      color = COLOR_PAIR(1);
+    else if (abils[i*2+1] == CON)
+      color = COLOR_PAIR(5);
+    else if (abils[i*2+1] == INT)
+      color = COLOR_PAIR(3);
+    else if (abils[i*2+1] == WIS)
+      color = COLOR_PAIR(6);
+    else if (abils[i*2+1] == CHA)
+      color = COLOR_PAIR(2);
 
-  mvwaddstr(skills, 11, 4, "   Arcana");
-  wattron(skills, COLOR_PAIR(3));
-  mvwaddstr(skills, 11, 23, "(Int)");
-  wattroff(skills, COLOR_PAIR(3));
-
-  mvwaddstr(skills, 12, 4, "   Athletics");
-  wattron(skills, COLOR_PAIR(4));
-  mvwaddstr(skills, 12, 23, "(Str)");
-  wattroff(skills, COLOR_PAIR(4));
-
-  mvwaddstr(skills, 13, 4, "+2 Deception");
-  wattron(skills, COLOR_PAIR(2));
-  mvwaddstr(skills, 13, 23, "(Cha)");
-  wattroff(skills, COLOR_PAIR(2));
-
-  mvwaddstr(skills, 14, 4, "   History");
-  wattron(skills, COLOR_PAIR(3));
-  mvwaddstr(skills, 14, 23, "(Int)");
-  wattroff(skills, COLOR_PAIR(3));
-
-  /* --- */
-
-  mvwaddstr(skills, 9, 29, "   Insight");
-  wattron(skills, COLOR_PAIR(3));
-  mvwaddstr(skills, 9, 48, "(Int)");
-  wattroff(skills, COLOR_PAIR(3));
-
-  mvwaddstr(skills, 10, 29, "   Intimidation");
-  wattron(skills, COLOR_PAIR(2));
-  mvwaddstr(skills, 10, 48, "(Cha)");
-  wattroff(skills, COLOR_PAIR(2));
-
-  mvwaddstr(skills, 11, 29, "   Investigation");
-  wattron(skills, COLOR_PAIR(3));
-  mvwaddstr(skills, 11, 48, "(Int)");
-  wattroff(skills, COLOR_PAIR(3));
-  
-  mvwaddstr(skills, 12, 29, "   Medicine");
-  wattron(skills, COLOR_PAIR(6));
-  mvwaddstr(skills, 12, 48, "(Wis)");
-  wattroff(skills, COLOR_PAIR(6));
-
-  wattron(skills, A_UNDERLINE);
-  mvwaddstr(skills, 13, 29, "+2 Nature");
-  wattroff(skills, A_UNDERLINE);
-  wattron(skills, COLOR_PAIR(3));
-  mvwaddstr(skills, 13, 48, "(Int)");
-  wattroff(skills, COLOR_PAIR(3));
-
-  mvwaddstr(skills, 14, 29, "   Perception");
-  wattron(skills, COLOR_PAIR(6));
-  mvwaddstr(skills, 14, 48, "(Wis)");
-  wattroff(skills, COLOR_PAIR(6));
-
-  /* --- */
-
-
-  mvwaddstr(skills, 9, 54, "   Performance");
-  wattron(skills, COLOR_PAIR(2));
-  mvwaddstr(skills, 9, 73, "(Cha)");
-  wattroff(skills, COLOR_PAIR(2));
-
-  mvwaddstr(skills, 10, 54, "   Persuasion");
-  wattron(skills, COLOR_PAIR(2));
-  mvwaddstr(skills, 10, 73, "(Cha)");
-  wattroff(skills, COLOR_PAIR(2));
-
-  mvwaddstr(skills, 11, 54, "   Religion");
-  wattron(skills, COLOR_PAIR(3));
-  mvwaddstr(skills, 11, 73, "(Int)");
-  wattroff(skills, COLOR_PAIR(3));
-
-  mvwaddstr(skills, 12, 54, "   Sleight of Hand");
-  wattron(skills, COLOR_PAIR(1));
-  mvwaddstr(skills, 12, 73, "(Dex)");
-  wattroff(skills, COLOR_PAIR(1));
-
-  mvwaddstr(skills, 13, 54, "   Stealth");
-  wattron(skills, COLOR_PAIR(1));
-  mvwaddstr(skills, 13, 73, "(Dex)");
-  wattroff(skills, COLOR_PAIR(1));
-
-  mvwaddstr(skills, 14, 54, "+2 Survival");
-  wattron(skills, COLOR_PAIR(6));
-  mvwaddstr(skills, 14, 73, "(Wis)");
-  wattroff(skills, COLOR_PAIR(6));
+    wattron(skills, color);
+    mvwprintw(skills, r, c+19, "(%s)", abils[i*2+1]);
+    wattroff(skills, color);
+  }
 }
 
 static void initSaves()
