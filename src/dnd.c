@@ -97,7 +97,7 @@ static void init()
   attron(COLOR_PAIR(3));
   mvaddstr(LOGO_B, LOGO_R-2-strlen(race), race);
   attroff(COLOR_PAIR(3));
-  mvaddch(LOGO_R, LOGO_R-2, ACS_LTEE);
+  mvaddch(LOGO_B, LOGO_R-2, ACS_LTEE);
 
   /* Logo */
   attron(COLOR_PAIR(1));
@@ -153,7 +153,7 @@ void namedBox(WINDOW *win, NBOX b)
   if (b.l1)
     mvwaddnstr(win, b.y, b.x+2, b.l1, b.c-4);
   if (b.l2)
-    mvwaddnstr(win, b.y+b.l-1, b.x+b.c-2-strnlen(b.content, b.c-4), b.l2, b.c-4);
+    mvwaddnstr(win, b.y+b.l-1, b.x+b.c-2-strnlen(b.l2, b.c-4), b.l2, b.c-4);
   if (b.content) {
     int midy = b.y + (b.l/2);
     int midx = b.x + (b.c/2) - strnlen(b.content, b.c-4)/2;
