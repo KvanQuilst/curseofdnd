@@ -7,7 +7,6 @@
 #include <string.h>
 
 #include "char.h"
-#include "logo.h"
 #include "skills.h"
 
 #include "dnd.h"
@@ -70,7 +69,20 @@ int main(int argc, char **argv)
 
 static void init()
 {
+  const char *dnd[10] = {
+    "     _______  ___   _____    __________  ______________  __    ___     ",
+    "    /  ___  \\/  /  /  /  \\  /  /  _____)/ _____/  ___  \\/  \\  /  /_____",
+    "   /  /  /  /  /  /  /    \\/  /  /  ___/  __) /  /  /  /    \\/  /  ___/",
+    "  /  /__/  /  /__/  /  /\\    /  /__/  /  /___/  /__/  /  /\\    (___  ) ", 
+    " /________/\\_______/__/  \\__/\\_______/______/________/__/  \\__/_____/  ",
+    "         _______  ______  _______  _______  _______  __    ___         ",
+    "        /  ___  \\/  __  \\/  ___  \\/  _____)/  ___  \\/  \\  /  /_____    ",
+    "   &   /  /  /  /  /_/  /  /__/  /  /  ___/  /  /  /    \\/  /  ___/    ",
+    "      /  /__/  /      _/  ___   /  /__/  /  /__/  /  /\\    (___  )     ",
+    "     /________/__/ \\__/__/  /__/\\_______/________/__/  \\__/_____/      "
+  }; 
   initscr();
+  curs_set(0);
   initColor();
   keypad(stdscr, TRUE);
   cbreak();
@@ -87,26 +99,26 @@ static void init()
 
   /* Character Name */
   mvaddch(LOGO_B, LOGO_L+2, ACS_RTEE);
-  attron(COLOR_PAIR(3));
+  attron(COLOR_PAIR(4));
   mvaddstr(LOGO_B, LOGO_L+3, name);
-  attroff(COLOR_PAIR(3));
+  attroff(COLOR_PAIR(4));
   mvaddch(LOGO_B, LOGO_L+3+strlen(name), ACS_LTEE);
 
   /* Race */
   mvaddch(LOGO_B, LOGO_R-3-strlen(race), ACS_RTEE);
-  attron(COLOR_PAIR(3));
+  attron(COLOR_PAIR(4));
   mvaddstr(LOGO_B, LOGO_R-2-strlen(race), race);
-  attroff(COLOR_PAIR(3));
+  attroff(COLOR_PAIR(4));
   mvaddch(LOGO_B, LOGO_R-2, ACS_LTEE);
 
   /* Logo */
-  attron(COLOR_PAIR(1));
+  attron(COLOR_PAIR(2));
   for (int i = 0; i < 5; i++)
     mvprintw(i+1, 1, "%s", dnd[i]);
-  attron(COLOR_PAIR(2));
+  attron(COLOR_PAIR(6));
   for (int i = 5; i < 10; i++)
     mvprintw(i+1, 1, "%s", dnd[i]);
-  attroff(COLOR_PAIR(2));
+  attroff(COLOR_PAIR(6));
 
   refresh();
 }
@@ -114,12 +126,12 @@ static void init()
 static void initColor() {
   start_color();
   use_default_colors();
-  init_pair(1, COLOR_GREEN, -1);
-  init_pair(2, COLOR_MAGENTA, -1);
-  init_pair(3, COLOR_CYAN, -1);
-  init_pair(4, COLOR_RED, -1);
-  init_pair(5, COLOR_YELLOW, -1);
-  init_pair(6, COLOR_BLUE, -1);
+  init_pair(1, COLOR_RED, -1);
+  init_pair(2, COLOR_GREEN, -1);
+  init_pair(3, COLOR_YELLOW, -1);
+  init_pair(4, COLOR_CYAN, -1);
+  init_pair(5, COLOR_BLUE, -1);
+  init_pair(6, COLOR_MAGENTA, -1);
 }
 
 void makeBox(WINDOW *win, int nlines, int ncols, 

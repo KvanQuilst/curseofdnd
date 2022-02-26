@@ -7,12 +7,15 @@
 
 WINDOW *skills = NULL;
 
+/* Local Globals */
 const char *STR = "Str";
 const char *DEX = "Dex";
 const char *CON = "Con";
 const char *INT = "Int";
 const char *WIS = "Wis";
 const char *CHA = "Cha";
+
+short mStr, mDex, mCon, mInt, mWis, mCha;
 
 /* Prototypes */
 static int calcSkillMod(int score);
@@ -37,7 +40,7 @@ void initSkills()
   wborder(skills,ACS_VLINE,ACS_VLINE,ACS_HLINE,ACS_HLINE,
       ACS_LTEE,ACS_URCORNER,ACS_LTEE,ACS_LRCORNER);
   mvwaddch(skills, 2, 83, ACS_BTEE);
-  wattron(skills, COLOR_PAIR(6));
+  wattron(skills, COLOR_PAIR(5));
   mvwaddch(skills, 3, 83, 'A');
   mvwaddch(skills, 4, 83, 'b');
   mvwaddch(skills, 5, 83, 'i');
@@ -47,7 +50,7 @@ void initSkills()
   mvwaddch(skills, 9, 83, 'i');
   mvwaddch(skills, 10, 83, 'e');
   mvwaddch(skills, 11, 83, 's');
-  wattroff(skills, COLOR_PAIR(6));
+  wattroff(skills, COLOR_PAIR(5));
   mvwaddch(skills, 12, 83, ACS_TTEE);
 
   initMod();
@@ -65,44 +68,44 @@ static void initMod()
 
   /* Strength */
   snprintf(score, 3, "%02d", str);
-  snprintf(mod, 4, "%+d", calcSkillMod(str));
-  NBOX bStr = {3, 16, 1, 1, "Strength", score, mod, COLOR_PAIR(4)};
+  snprintf(mod, 4, "%+d", (mStr = calcSkillMod(str)));
+  NBOX bStr = {3, 16, 1, 1, "Strength", score, mod, COLOR_PAIR(1)};
   namedBox(skills, bStr);
 
   /* Dexterity */
   snprintf(score, 3, "%02d", dex);
-  snprintf(mod, 4, "%+d", calcSkillMod(dex));
-  NBOX bDex = {3, 16, 1, 17, "Dexterity", score, mod, COLOR_PAIR(1)};
+  snprintf(mod, 4, "%+d", (mDex = calcSkillMod(dex)));
+  NBOX bDex = {3, 16, 1, 17, "Dexterity", score, mod, COLOR_PAIR(2)};
   namedBox(skills, bDex);
 
   /* Constitution */
   snprintf(score, 3, "%02d", con);
-  snprintf(mod, 4, "%+d", calcSkillMod(con));
-  NBOX bCon = {3, 16, 1, 33, "Constitution", score, mod, COLOR_PAIR(5)};
+  snprintf(mod, 4, "%+d", (mCon = calcSkillMod(con)));
+  NBOX bCon = {3, 16, 1, 33, "Constitution", score, mod, COLOR_PAIR(3)};
   namedBox(skills, bCon);
 
   /* Intelligence */
   snprintf(score, 3, "%02d", intt);
-  snprintf(mod, 4, "%+d", calcSkillMod(intt));
-  NBOX bInt = {3, 16, 4, 1, "Intelligence", score, mod, COLOR_PAIR(3)};
+  snprintf(mod, 4, "%+d", (mInt = calcSkillMod(intt)));
+  NBOX bInt = {3, 16, 4, 1, "Intelligence", score, mod, COLOR_PAIR(4)};
   namedBox(skills, bInt);
 
   /* Wisdom */
   snprintf(score, 3, "%02d", wis);
-  snprintf(mod, 4, "%+d", calcSkillMod(wis));
-  NBOX bWis = {3, 16, 4, 17, "Wisdom", score, mod, COLOR_PAIR(6)};
+  snprintf(mod, 4, "%+d", (mWis = calcSkillMod(wis)));
+  NBOX bWis = {3, 16, 4, 17, "Wisdom", score, mod, COLOR_PAIR(5)};
   namedBox(skills, bWis);
 
   /* Charisma */
   snprintf(score, 3, "%02d", cha);
-  snprintf(mod, 4, "%+d", calcSkillMod(cha));
-  NBOX bCha = {3, 16, 4, 33, "Charisma", score, mod, COLOR_PAIR(2)};
+  snprintf(mod, 4, "%+d", (mCha = calcSkillMod(cha)));
+  NBOX bCha = {3, 16, 4, 33, "Charisma", score, mod, COLOR_PAIR(6)};
   namedBox(skills, bCha); }
 
 static void initAbil()
 {
   int i, r, c;
-  short color;
+  short mod, color;
   const char *abils[36] = 
     {"Acrobatics", DEX, "Animal Handling", WIS,
      "Arcana", INT, "Athletics", STR, 
@@ -121,21 +124,28 @@ static void initAbil()
     r = (i % 6) + 9;
     c = (i / 6) * 25 + 4;
     color = 0;
-    mvwprintw(skills, r, c, "   %s", abils[i*2]);
 
-    if (abils[i*2+1] == STR)
-      color = COLOR_PAIR(4);
-    else if (abils[i*2+1] == DEX)
+    if (abils[i*2+1] == STR) {
+      mod = mStr;
       color = COLOR_PAIR(1);
-    else if (abils[i*2+1] == CON)
-      color = COLOR_PAIR(5);
-    else if (abils[i*2+1] == INT)
-      color = COLOR_PAIR(3);
-    else if (abils[i*2+1] == WIS)
-      color = COLOR_PAIR(6);
-    else if (abils[i*2+1] == CHA)
+    } else if (abils[i*2+1] == DEX) {
+      mod = mDex;
       color = COLOR_PAIR(2);
+    } else if (abils[i*2+1] == CON) {
+      mod = mCon;
+      color = COLOR_PAIR(3);
+    } else if (abils[i*2+1] == INT) {
+      mod = mInt;
+      color = COLOR_PAIR(4);
+    } else if (abils[i*2+1] == WIS) {
+      mod = mWis;
+      color = COLOR_PAIR(5);
+    } else if (abils[i*2+1] == CHA) {
+      mod = mCha;
+      color = COLOR_PAIR(6);
+    }
 
+    mvwprintw(skills, r, c, "%+d %s", mod, abils[i*2]);
     wattron(skills, color);
     mvwprintw(skills, r, c+19, "(%s)", abils[i*2+1]);
     wattroff(skills, color);
@@ -147,6 +157,35 @@ static void initSaves()
   NBOX bThrows = {4, 54, 16, 13, "Saving Throws", NULL, NULL, 0};
   namedBox(skills, bThrows);
 
+  mvwprintw(skills, 17, 15, "%+d", mStr);
+  wattron(skills, COLOR_PAIR(1));
+  mvwprintw(skills, 17, 18, "Strength");
+  wattroff(skills, COLOR_PAIR(1));
+
+  mvwprintw(skills, 17, 34, "%+d", mDex);
+  wattron(skills, COLOR_PAIR(2));
+  mvwprintw(skills, 17, 37, "Dexterity");
+  wattroff(skills, COLOR_PAIR(2));
+
+  mvwprintw(skills, 17, 50, "%+d", mCon);
+  wattron(skills, COLOR_PAIR(3));
+  mvwprintw(skills, 17, 53, "Constitution");
+  wattroff(skills, COLOR_PAIR(3));
+
+  mvwprintw(skills, 18, 15, "%+d", mInt);
+  wattron(skills, COLOR_PAIR(4));
+  mvwprintw(skills, 18, 18, "Intelligence");
+  wattroff(skills, COLOR_PAIR(4));
+
+  mvwprintw(skills, 18, 34, "%+d", mWis);
+  wattron(skills, COLOR_PAIR(5));
+  mvwprintw(skills, 18, 37, "Wisdom");
+  wattroff(skills, COLOR_PAIR(5));
+
+  mvwprintw(skills, 18, 50, "%+d", mCha);
+  wattron(skills, COLOR_PAIR(6));
+  mvwprintw(skills, 18, 53, "Charisma");
+  wattroff(skills, COLOR_PAIR(6));
 }
 
 static void initOther()
