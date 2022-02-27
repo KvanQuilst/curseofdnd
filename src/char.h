@@ -12,9 +12,16 @@ extern const char *pclass;
 extern int level;
 extern int expr;
 
-extern int str;
-extern int dex;
-extern int con;
-extern int intt;
-extern int wis;
-extern int cha;
+extern short sStr;
+extern short sDex;
+extern short sCon;
+extern short sInt;
+extern short sWis;
+extern short sCha;
+
+extern short mStr;
+extern short mDex;
+extern short mCon;
+extern short mInt;
+extern short mWis;
+extern short mCha;

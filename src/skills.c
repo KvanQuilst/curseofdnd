@@ -39,19 +39,19 @@ void initSkills()
   skills = newwin(SKILLS_B-SKILLS_T+1, SKILLS_R-SKILLS_L+2, SKILLS_T, SKILLS_L);
   wborder(skills,ACS_VLINE,ACS_VLINE,ACS_HLINE,ACS_HLINE,
       ACS_LTEE,ACS_URCORNER,ACS_LTEE,ACS_LRCORNER);
-  mvwaddch(skills, 2, 83, ACS_BTEE);
+  mvwaddch(skills, 1, 83, ACS_BTEE);
   wattron(skills, COLOR_PAIR(5));
-  mvwaddch(skills, 3, 83, 'A');
-  mvwaddch(skills, 4, 83, 'b');
-  mvwaddch(skills, 5, 83, 'i');
-  mvwaddch(skills, 6, 83, 'l');
-  mvwaddch(skills, 7, 83, 'i');
-  mvwaddch(skills, 8, 83, 't');
-  mvwaddch(skills, 9, 83, 'i');
-  mvwaddch(skills, 10, 83, 'e');
-  mvwaddch(skills, 11, 83, 's');
+  mvwaddch(skills, 2, 83, 'A');
+  mvwaddch(skills, 3, 83, 'b');
+  mvwaddch(skills, 4, 83, 'i');
+  mvwaddch(skills, 5, 83, 'l');
+  mvwaddch(skills, 6, 83, 'i');
+  mvwaddch(skills, 7, 83, 't');
+  mvwaddch(skills, 8, 83, 'i');
+  mvwaddch(skills, 9, 83, 'e');
+  mvwaddch(skills, 10, 83, 's');
   wattroff(skills, COLOR_PAIR(5));
-  mvwaddch(skills, 12, 83, ACS_TTEE);
+  mvwaddch(skills, 11, 83, ACS_TTEE);
 
   initMod();
   initAbil();
@@ -67,38 +67,38 @@ static void initMod()
   char mod[4] = {0};
 
   /* Strength */
-  snprintf(score, 3, "%02d", str);
-  snprintf(mod, 4, "%+d", (mStr = calcSkillMod(str)));
+  snprintf(score, 3, "%02d", sStr);
+  snprintf(mod, 4, "%+d", (mStr = calcSkillMod(sStr)));
   NBOX bStr = {3, 16, 1, 1, "Strength", score, mod, COLOR_PAIR(1)};
   namedBox(skills, bStr);
 
   /* Dexterity */
-  snprintf(score, 3, "%02d", dex);
-  snprintf(mod, 4, "%+d", (mDex = calcSkillMod(dex)));
+  snprintf(score, 3, "%02d", sDex);
+  snprintf(mod, 4, "%+d", (mDex = calcSkillMod(sDex)));
   NBOX bDex = {3, 16, 1, 17, "Dexterity", score, mod, COLOR_PAIR(2)};
   namedBox(skills, bDex);
 
   /* Constitution */
-  snprintf(score, 3, "%02d", con);
-  snprintf(mod, 4, "%+d", (mCon = calcSkillMod(con)));
+  snprintf(score, 3, "%02d", sCon);
+  snprintf(mod, 4, "%+d", (mCon = calcSkillMod(sCon)));
   NBOX bCon = {3, 16, 1, 33, "Constitution", score, mod, COLOR_PAIR(3)};
   namedBox(skills, bCon);
 
   /* Intelligence */
-  snprintf(score, 3, "%02d", intt);
-  snprintf(mod, 4, "%+d", (mInt = calcSkillMod(intt)));
+  snprintf(score, 3, "%02d", sInt);
+  snprintf(mod, 4, "%+d", (mInt = calcSkillMod(sInt)));
   NBOX bInt = {3, 16, 4, 1, "Intelligence", score, mod, COLOR_PAIR(4)};
   namedBox(skills, bInt);
 
   /* Wisdom */
-  snprintf(score, 3, "%02d", wis);
-  snprintf(mod, 4, "%+d", (mWis = calcSkillMod(wis)));
+  snprintf(score, 3, "%02d", sWis);
+  snprintf(mod, 4, "%+d", (mWis = calcSkillMod(sWis)));
   NBOX bWis = {3, 16, 4, 17, "Wisdom", score, mod, COLOR_PAIR(5)};
   namedBox(skills, bWis);
 
   /* Charisma */
-  snprintf(score, 3, "%02d", cha);
-  snprintf(mod, 4, "%+d", (mCha = calcSkillMod(cha)));
+  snprintf(score, 3, "%02d", sCha);
+  snprintf(mod, 4, "%+d", (mCha = calcSkillMod(sCha)));
   NBOX bCha = {3, 16, 4, 33, "Charisma", score, mod, COLOR_PAIR(6)};
   namedBox(skills, bCha); }
 

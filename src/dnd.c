@@ -7,6 +7,7 @@
 #include <string.h>
 
 #include "char.h"
+#include "health.h"
 #include "skills.h"
 
 #include "dnd.h"
@@ -23,12 +24,12 @@ const char *pclass;
 int level;
 int expr;
 
-int str;
-int dex;
-int con;
-int intt;
-int wis;
-int cha;
+short sStr;
+short sDex;
+short sCon;
+short sInt;
+short sWis;
+short sCha;
 
 int main(int argc, char **argv)
 {
@@ -43,17 +44,18 @@ int main(int argc, char **argv)
   level = 1;
   expr = 0;
 
-  str = 12;
-  dex = 17;
-  con = 13;
-  intt = 15;
-  wis = 20;
-  cha = 19;
+  sStr = 12;
+  sDex = 17;
+  sCon = 13;
+  sInt = 15;
+  sWis = 20;
+  sCha = 19;
 
 
   /* Prepare ncurses */
   init();
   initSkills();
+  initHealth();
   //getmaxyx(stdscr, row, col);
 
   /*while ((ch = getch()) != 'q') {
