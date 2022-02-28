@@ -1,0 +1,9 @@
+Locations:
+  - Skills: y, x, l, c
+  - Health: y, x, l, c
+  - Key (commands), y, x, l, c
+  - Character Info, y, x, l, c
+  - Equipment, y, x, l, c
+  - Spell Casting, y, x, l, c
+    - Spell Casting Info
+    - Spells
