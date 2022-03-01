@@ -11,7 +11,9 @@ void initHealth() {
   
   const int HEALTH_L = 0;
   const int HEALTH_T = 34;
-  const int HEALTH_R = 13; const int HEALTH_C = 48;
+  const int HEALTH_R = 13; 
+  const int HEALTH_C = 48;
+
   health = newwin(HEALTH_R, HEALTH_C, HEALTH_T, HEALTH_L);
   wborder(health,ACS_VLINE,ACS_VLINE,ACS_HLINE,ACS_HLINE,
       ACS_LTEE,ACS_URCORNER,ACS_LTEE,ACS_LRCORNER);

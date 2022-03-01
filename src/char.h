@@ -4,6 +4,7 @@
  */
 #pragma once
 
+/* Player Details */
 extern const char *name;
 extern const char *race;
 extern const char *background;
@@ -12,6 +13,7 @@ extern const char *pclass;
 extern int level;
 extern int expr;
 
+/* Skills */
 extern short sStr;
 extern short sDex;
 extern short sCon;
@@ -25,3 +27,9 @@ extern short mCon;
 extern short mInt;
 extern short mWis;
 extern short mCha;
+
+/* Vitality */
+extern short armor;
+extern short initiative;
+extern short speed;
+extern char *hitDice;

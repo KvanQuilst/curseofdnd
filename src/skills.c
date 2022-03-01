@@ -8,13 +8,6 @@
 WINDOW *skills = NULL;
 
 /* Local Globals */
-const char *STR = "Str";
-const char *DEX = "Dex";
-const char *CON = "Con";
-const char *INT = "Int";
-const char *WIS = "Wis";
-const char *CHA = "Cha";
-
 short mStr, mDex, mCon, mInt, mWis, mCha;
 
 /* Prototypes */
@@ -26,17 +19,11 @@ static void initOther();
 
 void initSkills()
 {
-  /*const unsigned SKILLS_L = 0;
-  const unsigned SKILLS_R = SKILLS_L + 82;
-  const unsigned SKILLS_T = LOGO_B+1;
-  const unsigned SKILLS_B = SKILLS_T+20;*/
-
-  const int SKILLS_L = 0;
-  const int SKILLS_R = 82;
   const int SKILLS_T = 13;
-  const int SKILLS_B = 33;
-
-  skills = newwin(SKILLS_B-SKILLS_T+1, SKILLS_R-SKILLS_L+2, SKILLS_T, SKILLS_L);
+  const int SKILLS_L = 0;
+  const int SKILLS_R = 21;
+  const int SKILLS_C = 84;
+  skills = newwin(SKILLS_R, SKILLS_C, SKILLS_T, SKILLS_L);
   wborder(skills,ACS_VLINE,ACS_VLINE,ACS_HLINE,ACS_HLINE,
       ACS_LTEE,ACS_URCORNER,ACS_LTEE,ACS_LRCORNER);
   mvwaddch(skills, 1, 83, ACS_BTEE);
@@ -106,6 +93,13 @@ static void initAbil()
 {
   int i, r, c;
   short mod, color;
+
+  const char *STR = "Str";
+  const char *DEX = "Dex";
+  const char *CON = "Con";
+  const char *INT = "Int";
+  const char *WIS = "Wis";
+  const char *CHA = "Cha";
   const char *abils[36] = 
     {"Acrobatics", DEX, "Animal Handling", WIS,
      "Arcana", INT, "Athletics", STR, 

@@ -12,8 +12,7 @@
 
 #include "dnd.h"
 
-/* Prototypes */
-static void init(void);
+/* Prototypes */ static void init(void);
 static void initColor(void);
 
 const char *name;
@@ -38,7 +37,7 @@ int main(int argc, char **argv)
 
   name = "Gnommy Depp";
   race = "Mark of the Shadow Elf";
-  background = "";
+  background = "Actor";
   alignment = "Chaotic Good";
   pclass = "Rogue";
   level = 1;
@@ -122,6 +121,8 @@ static void init()
     mvprintw(i+1, 1, "%s", dnd[i]);
   attroff(COLOR_PAIR(6));
 
+  /* Details */
+
   refresh();
 }
 
@@ -154,14 +155,7 @@ void makeBox(WINDOW *win, int nlines, int ncols,
 void namedBox(WINDOW *win, NBOX b)
 {
   wattron(win, b.color);
-  mvwvline(win, b.y+1, b.x, ACS_VLINE, b.l-2);
-  mvwvline(win, b.y+1, b.x+b.c-1, ACS_VLINE, b.l-2);
-  mvwhline(win, b.y, b.x+1, ACS_HLINE, b.c-2);
-  mvwhline(win, b.y+b.l-1, b.x+1, ACS_HLINE, b.c-2);
-  mvwaddch(win, b.y, b.x, ACS_ULCORNER);
-  mvwaddch(win, b.y, b.x+b.c-1, ACS_URCORNER);
-  mvwaddch(win, b.y+b.l-1, b.x, ACS_LLCORNER);
-  mvwaddch(win, b.y+b.l-1, b.x+b.c-1, ACS_LRCORNER);
+  makeBox(win, b.l, b.c, b.y, b.x);
   wattroff(win, b.color);
 
   if (b.l1)
