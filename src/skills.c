@@ -19,7 +19,7 @@ static void initOther();
 
 void initSkills()
 {
-  const int SKILLS_T = 13;
+  const int SKILLS_T = 18;
   const int SKILLS_L = 0;
   const int SKILLS_R = 21;
   const int SKILLS_C = 84;

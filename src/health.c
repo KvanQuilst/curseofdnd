@@ -10,9 +10,11 @@ WINDOW *health = NULL;
 void initHealth() {
   
   const int HEALTH_L = 0;
-  const int HEALTH_T = 34;
+  const int HEALTH_T = 39;
   const int HEALTH_R = 13; 
   const int HEALTH_C = 48;
+
+  char spd[4] = {0};
 
   health = newwin(HEALTH_R, HEALTH_C, HEALTH_T, HEALTH_L);
   wborder(health,ACS_VLINE,ACS_VLINE,ACS_HLINE,ACS_HLINE,
@@ -36,7 +38,8 @@ void initHealth() {
   NBOX bInit = {3, 15, 1, 16, "Initiative", NULL, NULL};
   namedBox(health, bInit);
 
-  NBOX bSpeed = {3, 15, 1, 31, "Speed", NULL, NULL};
+  snprintf(spd, 4, "%03d", speed);
+  NBOX bSpeed = {3, 15, 1, 31, "Speed", NULL, spd};
   namedBox(health, bSpeed);
 
   NBOX bMax = {3, 45, 5, 1, "Hit Point Maximum: ", "Temporary", NULL};

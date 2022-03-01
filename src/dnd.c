@@ -30,6 +30,8 @@ short sInt;
 short sWis;
 short sCha;
 
+short speed;
+
 int main(int argc, char **argv)
 {
   setlocale(LC_ALL, "");
@@ -41,7 +43,7 @@ int main(int argc, char **argv)
   alignment = "Chaotic Good";
   pclass = "Rogue";
   level = 1;
-  expr = 0;
+  expr = 100;
 
   sStr = 12;
   sDex = 17;
@@ -50,6 +52,7 @@ int main(int argc, char **argv)
   sWis = 20;
   sCha = 19;
 
+  speed = 30;
 
   /* Prepare ncurses */
   init();
@@ -98,20 +101,6 @@ static void init()
   mvaddch(LOGO_T, LOGO_R, ACS_TTEE);
   mvaddch(LOGO_B, LOGO_R, ACS_LRCORNER);
 
-  /* Character Name */
-  mvaddch(LOGO_B, LOGO_L+2, ACS_RTEE);
-  attron(COLOR_PAIR(4));
-  mvaddstr(LOGO_B, LOGO_L+3, name);
-  attroff(COLOR_PAIR(4));
-  mvaddch(LOGO_B, LOGO_L+3+strlen(name), ACS_LTEE);
-
-  /* Race */
-  mvaddch(LOGO_B, LOGO_R-3-strlen(race), ACS_RTEE);
-  attron(COLOR_PAIR(4));
-  mvaddstr(LOGO_B, LOGO_R-2-strlen(race), race);
-  attroff(COLOR_PAIR(4));
-  mvaddch(LOGO_B, LOGO_R-2, ACS_LTEE);
-
   /* Logo */
   attron(COLOR_PAIR(2));
   for (int i = 0; i < 5; i++)
@@ -122,6 +111,28 @@ static void init()
   attroff(COLOR_PAIR(6));
 
   /* Details */
+  makeBox(stdscr, 5, 68, 12, 3);
+  mvaddch(12, 3, ACS_TTEE);
+  mvaddch(12, 70, ACS_TTEE);
+  mvprintw(12, 5, "Name");
+  mvaddch(12, 25, ACS_RTEE);
+  mvprintw(12, 26, "|        Race        |");
+  mvaddch(12, 48, ACS_LTEE);
+  mvprintw(12, 60, "Alignment");
+  mvprintw(16, 59, "Experience");
+  mvaddch(16, 25, ACS_RTEE);
+  mvprintw(16, 26, "|       Class        |");
+  mvaddch(16, 48, ACS_LTEE);
+  mvprintw(16, 5, "Background");
+
+  attron(A_BOLD | COLOR_PAIR(5));
+  mvprintw(13, 5, "%s", name);
+  mvprintw(13, 69-strlen(alignment), "%s", alignment);
+  mvprintw(13, 3+(71-3)/2-(strlen(race)/2), "%s", race);
+  mvprintw(15, 5, "%s", background);
+  mvprintw(15, 3+(71-3)/2-((strlen(pclass)+5)/2), "%s:  %02d", pclass, level);
+  mvprintw(15, 65, "%4d", expr);
+  attroff(A_BOLD | COLOR_PAIR(5));
 
   refresh();
 }
