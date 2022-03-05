@@ -4,11 +4,6 @@
  */
 #pragma once
 
-#define LOGO_L 0
-#define LOGO_R 73
-#define LOGO_T 0
-#define LOGO_B 12
-
 typedef struct _NBOX NBOX;
 struct _NBOX{
   int l, c;

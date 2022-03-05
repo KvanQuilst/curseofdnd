@@ -20,12 +20,12 @@ static void initOther();
 void initSkills()
 {
   const int SKILLS_T = 18;
-  const int SKILLS_L = 0;
+  const int SKILLS_L = 1;
   const int SKILLS_R = 21;
   const int SKILLS_C = 84;
   skills = newwin(SKILLS_R, SKILLS_C, SKILLS_T, SKILLS_L);
   wborder(skills,ACS_VLINE,ACS_VLINE,ACS_HLINE,ACS_HLINE,
-      ACS_LTEE,ACS_URCORNER,ACS_LTEE,ACS_LRCORNER);
+      ACS_ULCORNER,ACS_URCORNER,ACS_LLCORNER,ACS_LRCORNER);
   mvwaddch(skills, 1, 83, ACS_BTEE);
   wattron(skills, COLOR_PAIR(5));
   mvwaddch(skills, 2, 83, 'A');

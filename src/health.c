@@ -9,7 +9,7 @@ WINDOW *health = NULL;
 
 void initHealth() {
   
-  const int HEALTH_L = 0;
+  const int HEALTH_L = 1;
   const int HEALTH_T = 39;
   const int HEALTH_R = 13; 
   const int HEALTH_C = 48;
@@ -18,7 +18,7 @@ void initHealth() {
 
   health = newwin(HEALTH_R, HEALTH_C, HEALTH_T, HEALTH_L);
   wborder(health,ACS_VLINE,ACS_VLINE,ACS_HLINE,ACS_HLINE,
-      ACS_LTEE,ACS_URCORNER,ACS_LTEE,ACS_LRCORNER);
+      ACS_ULCORNER,ACS_URCORNER,ACS_LLCORNER,ACS_LRCORNER);
   mvwaddch(health, 1, HEALTH_C-1, ACS_BTEE);
   wattron(health, COLOR_PAIR(5));
   mvwaddch(health, 2, HEALTH_C-1, 'V');
