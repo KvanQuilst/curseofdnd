@@ -3,10 +3,7 @@
  * health.h
  */
 
-#include <ncurses.h>
-
-#include "char.h"
-#include "dnd.h"
+#include "include.h"
 
 extern WINDOW *health;
 

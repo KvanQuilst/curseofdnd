@@ -63,5 +63,5 @@ void initLogo(void)
   mvwprintw(logo, 15, 68, "%4d", expr);
   wattroff(logo, A_BOLD | COLOR_PAIR(5));
 
-  wrefresh(logo);
+  wnoutrefresh(logo);
 }

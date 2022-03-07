@@ -4,10 +4,7 @@
  */
 #pragma once
 
-#include <ncurses.h>
-
-#include "char.h"
-#include "dnd.h"
+#include "include.h"
 
 extern const int SKILLS_T;
 extern const int SKILLS_L;

@@ -3,16 +3,13 @@
  * dnd.c
  */
 #include <locale.h>
-#include <ncurses.h>
-#include <string.h>
 
 #include "attack.h"
-#include "char.h"
+#include "include.h"
 #include "logo.h"
 #include "health.h"
 #include "skills.h"
 
-#include "dnd.h"
 
 /* Prototypes */ 
 static void init(void);
@@ -63,6 +60,7 @@ int main(int argc, char **argv)
   initSkills();
   initHealth();
   initAttack();
+  doupdate();
   //getmaxyx(stdscr, row, col);
 
   /*while ((ch = getch()) != 'q') {
@@ -84,7 +82,8 @@ static void init()
   keypad(stdscr, TRUE);
   cbreak();
   noecho();
-  refresh();
+  //refresh();
+  wnoutrefresh(stdscr);
 }
 
 static void initColor() {

@@ -4,11 +4,7 @@
  */
 #pragma once
 
-#include <ncurses.h>
-#include <string.h>
-
-#include "char.h"
-#include "dnd.h"
+#include "include.h"
 
 extern WINDOW *logo;
 

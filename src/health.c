@@ -55,5 +55,5 @@ void initHealth() {
   namedBox(health, bDeath);
   mvwaddstr(health, 11, 25, "Success");
 
-  wrefresh(health);
+  wnoutrefresh(health);
 }

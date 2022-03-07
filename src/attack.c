@@ -28,5 +28,5 @@ void initAttack()
   wattroff(attack, COLOR_PAIR(5));
   mvwaddch(attack, 8, 49, ACS_TTEE);
 
-  wrefresh(attack);
+  wnoutrefresh(attack);
 }

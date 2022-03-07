@@ -45,7 +45,7 @@ void initSkills()
   initSaves();
   initOther();
 
-  wrefresh(skills);
+  wnoutrefresh(skills);
 }
 
 static void initMod()
