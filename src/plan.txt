@@ -1,9 +1,36 @@
-Locations:
-  - Skills: y, x, l, c
-  - Health: y, x, l, c
-  - Key (commands), y, x, l, c
-  - Character Info, y, x, l, c
-  - Equipment, y, x, l, c
-  - Spell Casting, y, x, l, c
-    - Spell Casting Info
-    - Spells
+Startup:
+  Prompt List: Pick Character or Create New
+    - List characters available in save directory (json?)
+    - Upon selection, load sheet
+  
+  Create New:
+    Fields of Key Information
+      - [Stretch] Respository of base race/class information to auto-fill
+
+  Load Sheet:
+    Present all character data (or majority)
+      - Determine screen size
+      - Arrange characteristic boxes accordingly
+        - Small screen: Multipage or y-Scroll
+        - Large screen: Present all fields
+      - Full equipment, attacks and spells have seperate page (trifold?)
+        ─────────── ───────── ────────
+       │ Equipment │ Attacks │ Spells │
+       ├───────────┘         └────────┴───
+       │   
+
+  Key Commands:
+    'q' - Quit
+    '^s' - Save
+    '^l' - Load
+
+    'l' - Level up window
+    'e' - Equipment, attacks spells window (if small, tabbed)
+
+TODO:
+  [ ] Character info storage/parsing
+  [ ] Charactersitic box placement
+  [ ] Interaction loop (process user input)
+  [ ] Equipment, attacks, spells window
+  [ ] Level up mechanics
+  [ ] Startup prompt
