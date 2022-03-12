@@ -6,11 +6,30 @@
 #include "sea.h"
 
 WINDOW *sea[3]; /* 0: Attack | 1: Spells | 2: Equipment */
+PANEL *pan[3];
 
 void loadSeaTri(void)
 {
-  int row, col;
+  int row, col, l, offset;
   getmaxyx(stdscr, row, col);
+  l = col / 3;
+  offset = col % 3;
+
+  sea[0] = newwin(row, l, 5, 0);
+  sea[1] = newwin(row, l+offset, 5, l);
+  sea[2] = newwin(row, l, 5, col-l);
+
+  NBOX nAtt = {row-6, l, 0, 0, "Attacks", NULL, NULL, COLOR_PAIR(1)}; 
+  namedBox(sea[0], nAtt);
+  wnoutrefresh(sea[0]);
+
+  NBOX nSpell = {row-6, l+offset, 0, 0, "Spells", NULL, NULL, COLOR_PAIR(5)};
+  namedBox(sea[1], nSpell);
+  wnoutrefresh(sea[1]);
+
+  NBOX nEquip = {row-6, l, 0, 0, "Equipment", NULL, NULL, COLOR_PAIR(2)};
+  namedBox(sea[2], nEquip);
+  wnoutrefresh(sea[2]);
 }
 
 void loadSeaTabs(void)
@@ -42,10 +61,11 @@ void loadSeaTabs(void)
   wnoutrefresh(stdscr);
 
   /* Equipment */
+  wattron(sea[2], COLOR_PAIR(2));
   makeBox(sea[2], row-3, col, 0, 0);
   mvwaddch(sea[2], 0, 26, ACS_LRCORNER);
   mvwhline(sea[2], 0, 27, ' ', 11);
-  mvwaddch(sea[2], 0, 28, ACS_LLCORNER);
+  mvwaddch(sea[2], 0, 38, ACS_LLCORNER);
   wattroff(sea[2], COLOR_PAIR(2));
   wnoutrefresh(sea[2]);
 
@@ -66,4 +86,12 @@ void loadSeaTabs(void)
   mvwaddch(sea[0], 0, 12, ACS_LLCORNER);
   wattroff(sea[0], COLOR_PAIR(1));
   wnoutrefresh(sea[0]);
+
+  pan[0] = new_panel(sea[0]);
+  pan[1] = new_panel(sea[1]);
+  pan[2] = new_panel(sea[2]);
+  set_panel_userptr(pan[0], pan[1]);
+  set_panel_userptr(pan[1], pan[2]);
+  set_panel_userptr(pan[2], pan[0]);
+  update_panels();
 }

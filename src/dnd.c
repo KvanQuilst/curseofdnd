@@ -35,7 +35,7 @@ short speed;
 int main(int argc, char **argv)
 {
   setlocale(LC_ALL, "");
-  //int row, col;
+  int row, col;
   //int ch;
 
   name = "Gnommy Depp";
@@ -57,13 +57,17 @@ int main(int argc, char **argv)
 
   /* Prepare ncurses */
   init();
+  getmaxyx(stdscr, row, col);
   /*initLogo();
   initSkills();
   initHealth();
   initAttack();*/
-  loadSeaTabs();
+  if (col < 90)
+    loadSeaTabs();
+  else
+    loadSeaTri();
+
   doupdate();
-  //getmaxyx(stdscr, row, col);
 
   /*while ((ch = getch()) != 'q') {
 
