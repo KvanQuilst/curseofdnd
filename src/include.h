@@ -5,6 +5,7 @@
 #pragma once
 
 #include <ncurses.h>
+#include <panel.h>
 #include <string.h>
 
 #include "char.h"

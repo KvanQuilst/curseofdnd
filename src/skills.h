@@ -13,4 +13,4 @@ extern const int SKILLS_C;
 
 extern WINDOW *skills;
 
-void initSkills();
+void initSkills(void);

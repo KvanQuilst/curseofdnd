@@ -9,7 +9,7 @@
 #include "logo.h"
 #include "health.h"
 #include "skills.h"
-
+#include "sea.h"
 
 /* Prototypes */ 
 static void init(void);
@@ -35,7 +35,8 @@ short speed;
 int main(int argc, char **argv)
 {
   setlocale(LC_ALL, "");
-  //int row, col, ch;
+  //int row, col;
+  //int ch;
 
   name = "Gnommy Depp";
   race = "Mark of the Shadow Elf";
@@ -56,10 +57,11 @@ int main(int argc, char **argv)
 
   /* Prepare ncurses */
   init();
-  initLogo();
+  /*initLogo();
   initSkills();
   initHealth();
-  initAttack();
+  initAttack();*/
+  loadSeaTabs();
   doupdate();
   //getmaxyx(stdscr, row, col);
 
@@ -67,8 +69,8 @@ int main(int argc, char **argv)
 
   }*/
 
-  if (skills != NULL)
-    wgetch(skills);
+  if (stdscr != NULL)
+    wgetch(stdscr);
 
   endwin();
   return 0;
