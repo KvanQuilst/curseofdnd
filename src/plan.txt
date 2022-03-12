@@ -14,9 +14,9 @@ Startup:
         - Small screen: Multipage or y-Scroll
         - Large screen: Present all fields
       - Full equipment, attacks and spells have seperate page (trifold?)
-        ─────────── ───────── ────────
-       │ Equipment │ Attacks │ Spells │
-       ├───────────┘         └────────┴───
+        ───────────  ─────────  ────────
+       │ Equipment ││ Attacks ││ Spells │
+       ┌────────────┘         └─────────────
        │   
 
   Key Commands:
