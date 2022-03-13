@@ -6,7 +6,7 @@
 
 #include "attack.h"
 #include "include.h"
-#include "logo.h"
+#include "home.h"
 #include "health.h"
 #include "skills.h"
 #include "sea.h"
@@ -58,14 +58,15 @@ int main(int argc, char **argv)
   /* Prepare ncurses */
   init();
   getmaxyx(stdscr, row, col);
-  /*initLogo();
-  initSkills();
-  initHealth();
-  initAttack();*/
-  if (col < 90)
+  //initLogo();
+  loadHome();
+  //initSkills();
+  //initHealth();
+  //initAttack();
+  /*if (col < 90)
     loadSeaTabs();
   else
-    loadSeaTri();
+    loadSeaTri();*/
 
   doupdate();
 

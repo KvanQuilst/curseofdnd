@@ -87,7 +87,8 @@ static void initMod()
   snprintf(score, 3, "%02d", sCha);
   snprintf(mod, 4, "%+d", (mCha = calcSkillMod(sCha)));
   NBOX bCha = {3, 16, 4, 33, "Charisma", score, mod, COLOR_PAIR(6)};
-  namedBox(skills, bCha); }
+  namedBox(skills, bCha); 
+}
 
 static void initAbil()
 {

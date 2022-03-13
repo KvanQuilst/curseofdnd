@@ -6,7 +6,7 @@
 #include "sea.h"
 
 WINDOW *sea[3]; /* 0: Attack | 1: Spells | 2: Equipment */
-PANEL *pan[3];
+PANEL *pSea[3];
 
 void loadSeaTri(void)
 {
@@ -30,6 +30,14 @@ void loadSeaTri(void)
   NBOX nEquip = {row-6, l, 0, 0, "Equipment", NULL, NULL, COLOR_PAIR(2)};
   namedBox(sea[2], nEquip);
   wnoutrefresh(sea[2]);
+
+  pSea[0] = new_panel(sea[0]);
+  pSea[1] = new_panel(sea[1]);
+  pSea[2] = new_panel(sea[2]);
+  set_panel_userptr(pSea[0], pSea[1]);
+  set_panel_userptr(pSea[1], pSea[2]);
+  set_panel_userptr(pSea[2], pSea[0]);
+  update_panels();
 }
 
 void loadSeaTabs(void)
@@ -87,11 +95,11 @@ void loadSeaTabs(void)
   wattroff(sea[0], COLOR_PAIR(1));
   wnoutrefresh(sea[0]);
 
-  pan[0] = new_panel(sea[0]);
-  pan[1] = new_panel(sea[1]);
-  pan[2] = new_panel(sea[2]);
-  set_panel_userptr(pan[0], pan[1]);
-  set_panel_userptr(pan[1], pan[2]);
-  set_panel_userptr(pan[2], pan[0]);
+  pSea[0] = new_panel(sea[0]);
+  pSea[1] = new_panel(sea[1]);
+  pSea[2] = new_panel(sea[2]);
+  set_panel_userptr(pSea[0], pSea[1]);
+  set_panel_userptr(pSea[1], pSea[2]);
+  set_panel_userptr(pSea[2], pSea[0]);
   update_panels();
 }
