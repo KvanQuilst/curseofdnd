@@ -8,5 +8,6 @@
 
 //extern WINDOW *sea;
 
-void loadSeaTri(void);
-void loadSeaTabs(void);
+void initSeaTri(void);
+void initSeaTabs(void);
+void loadSea(void);

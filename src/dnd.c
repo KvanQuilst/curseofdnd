@@ -46,7 +46,7 @@ int main(int argc, char **argv)
   int ch; 
   short running = 1, update = 0;
 
-  enum {s_home, s_equip};
+  enum {s_home, s_equip, s_detail};
   int state = s_home;
 
   name = "Gnommy Depp";
@@ -76,11 +76,10 @@ int main(int argc, char **argv)
   initHome();
   loadHome();
   doupdate();
-  /*if (col < 90)
-    loadSeaTabs();
+  if (col < 90)
+    initSeaTabs();
   else
-    loadSeaTri();*/
-
+    initSeaTri();
 
   while (running) {
     ch = getch();
@@ -125,7 +124,7 @@ int main(int argc, char **argv)
         break;
         
       case s_equip:
-        if (update) loadSeaTri();
+        if (update) loadSea();
         break;
     }
     doupdate();
@@ -147,7 +146,7 @@ static void init()
   cbreak();
   noecho();
   nonl();
-  wnoutrefresh(stdscr);
+  //wnoutrefresh(stdscr);
 }
 
 static void initColor() {
@@ -172,8 +171,6 @@ void makeBox(WINDOW *win, int nlines, int ncols,
   mvwaddch(win, begin_y, begin_x+ncols-1, ACS_URCORNER);
   mvwaddch(win, begin_y+nlines-1, begin_x, ACS_LLCORNER);
   mvwaddch(win, begin_y+nlines-1, begin_x+ncols-1, ACS_LRCORNER);
-
-  wrefresh(win);
 }
 
 void namedBox(WINDOW *win, NBOX b)

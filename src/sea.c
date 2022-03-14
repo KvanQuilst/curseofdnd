@@ -8,7 +8,7 @@
 WINDOW *sea[3]; /* 0: Attack | 1: Spells | 2: Equipment */
 PANEL *pSea[3];
 
-void loadSeaTri(void)
+void initSeaTri(void)
 {
   int row, col, l, offset;
   getmaxyx(stdscr, row, col);
@@ -21,15 +21,12 @@ void loadSeaTri(void)
 
   NBOX nAtt = {row-6, l, 0, 0, "Attacks", NULL, NULL, COLOR_PAIR(1)}; 
   namedBox(sea[0], nAtt);
-  wnoutrefresh(sea[0]);
 
   NBOX nSpell = {row-6, l+offset, 0, 0, "Spells", NULL, NULL, COLOR_PAIR(5)};
   namedBox(sea[1], nSpell);
-  wnoutrefresh(sea[1]);
 
   NBOX nEquip = {row-6, l, 0, 0, "Equipment", NULL, NULL, COLOR_PAIR(2)};
   namedBox(sea[2], nEquip);
-  wnoutrefresh(sea[2]);
 
   pSea[0] = new_panel(sea[0]);
   pSea[1] = new_panel(sea[1]);
@@ -37,10 +34,9 @@ void loadSeaTri(void)
   set_panel_userptr(pSea[0], pSea[1]);
   set_panel_userptr(pSea[1], pSea[2]);
   set_panel_userptr(pSea[2], pSea[0]);
-  update_panels();
 }
 
-void loadSeaTabs(void)
+void initSeaTabs(void)
 {
   int row, col;
   getmaxyx(stdscr, row, col);
@@ -66,7 +62,6 @@ void loadSeaTabs(void)
   mvaddch(1, 38, ACS_VLINE);
   mvhline(0, 27, ACS_HLINE, 11);
   mvprintw(1, 28, "Equipment");
-  wnoutrefresh(stdscr);
 
   /* Equipment */
   wattron(sea[2], COLOR_PAIR(2));
@@ -75,7 +70,6 @@ void loadSeaTabs(void)
   mvwhline(sea[2], 0, 27, ' ', 11);
   mvwaddch(sea[2], 0, 38, ACS_LLCORNER);
   wattroff(sea[2], COLOR_PAIR(2));
-  wnoutrefresh(sea[2]);
 
   /* Spells */
   wattron(sea[1], COLOR_PAIR(4));
@@ -84,7 +78,6 @@ void loadSeaTabs(void)
   mvwhline(sea[1], 0, 14, ' ', 11);
   mvwaddch(sea[1], 0, 25, ACS_LLCORNER);
   wattroff(sea[1], COLOR_PAIR(4));
-  wnoutrefresh(sea[1]);
 
   /* Attacks */
   wattron(sea[0], COLOR_PAIR(1));
@@ -93,7 +86,6 @@ void loadSeaTabs(void)
   mvwhline(sea[0], 0, 1, ' ', 11);
   mvwaddch(sea[0], 0, 12, ACS_LLCORNER);
   wattroff(sea[0], COLOR_PAIR(1));
-  wnoutrefresh(sea[0]);
 
   pSea[0] = new_panel(sea[0]);
   pSea[1] = new_panel(sea[1]);
@@ -101,5 +93,13 @@ void loadSeaTabs(void)
   set_panel_userptr(pSea[0], pSea[1]);
   set_panel_userptr(pSea[1], pSea[2]);
   set_panel_userptr(pSea[2], pSea[0]);
+}
+
+void loadSea(void)
+{
+  for (int i = 0; i < 3; i++) {
+    touchwin(sea[i]);
+    wnoutrefresh(sea[i]); 
+  }
   update_panels();
 }

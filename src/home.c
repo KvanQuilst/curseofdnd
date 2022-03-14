@@ -108,8 +108,6 @@ static void logo(void)
   mvwprintw(home[0], 15, 3+(71-3)/2-((strlen(pclass)+5)/2), "%s:  %02d", pclass, level);
   mvwprintw(home[0], 15, 68, "%4d", expr);
   wattroff(home[0], A_BOLD | COLOR_PAIR(5));
-
-  wnoutrefresh(home[0]);
 }
 
 static void skills(void)
@@ -135,8 +133,6 @@ static void skills(void)
   skillsAbil();
   skillsSaves();
   skillsOther();
-
-  wnoutrefresh(home[1]);
 }
 
 static void skillsMod(void)
@@ -334,8 +330,6 @@ static void health(void)
   NBOX bDeath = {3, 22, 9, 23, "Death Saves", "Fail", "o  o  o    o  o  o"};
   namedBox(home[2], bDeath);
   mvwaddstr(home[2], 11, 25, "Success");
-
-  wnoutrefresh(home[2]);
 }
 
 static void key(void)
@@ -359,6 +353,4 @@ static void key(void)
   mvwprintw(home[3], 5, 2, "s : Save Character Sheet");
   mvwprintw(home[3], 6, 2, "n : Create New Character");
   mvwprintw(home[3], 7, 2, "q : Quit");
-
-  wnoutrefresh(home[3]);
 }
