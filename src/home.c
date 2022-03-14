@@ -5,6 +5,7 @@
 
 #include "home.h"
 
+WINDOW *hbg;
 WINDOW *home[4]; /* 0: Logo | 1: Skills | 2: Armor | 3: Atacks */
 PANEL *pHome[4];
 
@@ -35,6 +36,7 @@ static void key(void);
 void initHome(void)
 {
   getmaxyx(stdscr, row, col);
+  hbg = newwin(row, col, 0, 0);
   home[0] = newwin(logo_r, logo_c, 0, col/2 - logo_c/2);
   home[1] = newwin(skill_r, skill_c, logo_r+1, col/2 - skill_c/2);
   home[2] = newwin(health_r, health_c, logo_r+skill_r+2, col/2 - skill_c/2);
@@ -53,6 +55,8 @@ void initHome(void)
 
 void loadHome(void)
 {
+  touchwin(hbg);
+  wnoutrefresh(hbg);
   for (int i = 0; i < 4; i++) {
     touchwin(home[i]);
     wnoutrefresh(home[i]);

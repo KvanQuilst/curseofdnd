@@ -5,6 +5,7 @@
 
 #include "sea.h"
 
+WINDOW *sbg;
 WINDOW *sea[3]; /* 0: Attack | 1: Spells | 2: Equipment */
 PANEL *pSea[3];
 
@@ -15,6 +16,7 @@ void initSeaTri(void)
   l = col / 3;
   offset = col % 3;
 
+  sbg = newwin(row, col, 0, 0);
   sea[0] = newwin(row, l, 5, 0);
   sea[1] = newwin(row, l+offset, 5, l);
   sea[2] = newwin(row, l, 5, col-l);
@@ -40,36 +42,37 @@ void initSeaTabs(void)
 {
   int row, col;
   getmaxyx(stdscr, row, col);
+  sbg = newwin(row, col, 0, 0);
   sea[0] = newwin(row, col, 2, 0);
   sea[1] = newwin(row, col, 2, 0);
   sea[2] = newwin(row, col, 2, 0);
 
   /* Tabs */
-  attron(COLOR_PAIR(1));
-  mvaddch(1, 0, ACS_VLINE);
-  mvaddch(1, 12, ACS_VLINE);
-  mvhline(0, 1, ACS_HLINE, 11);
-  mvprintw(1, 3, "Attacks");
+  wattron(sbg, COLOR_PAIR(1));
+  mvwaddch(sbg, 1, 0, ACS_VLINE);
+  mvwaddch(sbg, 1, 12, ACS_VLINE);
+  mvwhline(sbg, 0, 1, ACS_HLINE, 11);
+  mvwprintw(sbg, 1, 3, "Attacks");
 
-  attron(COLOR_PAIR(4));
-  mvaddch(1, 13, ACS_VLINE);
-  mvaddch(1, 25, ACS_VLINE);
-  mvhline(0, 14, ACS_HLINE, 11);
-  mvprintw(1, 15, "Spells");
+  wattron(sbg, COLOR_PAIR(4));
+  mvwaddch(sbg, 1, 13, ACS_VLINE);
+  mvwaddch(sbg, 1, 25, ACS_VLINE);
+  mvwhline(sbg, 0, 14, ACS_HLINE, 11);
+  mvwprintw(sbg, 1, 15, "Spells");
 
-  attron(COLOR_PAIR(2));
-  mvaddch(1, 26, ACS_VLINE);
-  mvaddch(1, 38, ACS_VLINE);
-  mvhline(0, 27, ACS_HLINE, 11);
-  mvprintw(1, 28, "Equipment");
+  wattron(sbg, COLOR_PAIR(2));
+  mvwaddch(sbg, 1, 26, ACS_VLINE);
+  mvwaddch(sbg, 1, 38, ACS_VLINE);
+  mvwhline(sbg, 0, 27, ACS_HLINE, 11);
+  mvwprintw(sbg, 1, 28, "Equipment");
 
-  /* Equipment */
-  wattron(sea[2], COLOR_PAIR(2));
-  makeBox(sea[2], row-3, col, 0, 0);
-  mvwaddch(sea[2], 0, 26, ACS_LRCORNER);
-  mvwhline(sea[2], 0, 27, ' ', 11);
-  mvwaddch(sea[2], 0, 38, ACS_LLCORNER);
-  wattroff(sea[2], COLOR_PAIR(2));
+  /* Attacks */
+  wattron(sea[0], COLOR_PAIR(1));
+  makeBox(sea[0], row-3, col, 0, 0);
+  mvwaddch(sea[0], 0, 0, ACS_VLINE);
+  mvwhline(sea[0], 0, 1, ' ', 11);
+  mvwaddch(sea[0], 0, 12, ACS_LLCORNER);
+  wattroff(sea[0], COLOR_PAIR(1));
 
   /* Spells */
   wattron(sea[1], COLOR_PAIR(4));
@@ -79,13 +82,13 @@ void initSeaTabs(void)
   mvwaddch(sea[1], 0, 25, ACS_LLCORNER);
   wattroff(sea[1], COLOR_PAIR(4));
 
-  /* Attacks */
-  wattron(sea[0], COLOR_PAIR(1));
-  makeBox(sea[0], row-3, col, 0, 0);
-  mvwaddch(sea[0], 0, 0, ACS_VLINE);
-  mvwhline(sea[0], 0, 1, ' ', 11);
-  mvwaddch(sea[0], 0, 12, ACS_LLCORNER);
-  wattroff(sea[0], COLOR_PAIR(1));
+  /* Equipment */
+  wattron(sea[2], COLOR_PAIR(2));
+  makeBox(sea[2], row-3, col, 0, 0);
+  mvwaddch(sea[2], 0, 26, ACS_LRCORNER);
+  mvwhline(sea[2], 0, 27, ' ', 11);
+  mvwaddch(sea[2], 0, 38, ACS_LLCORNER);
+  wattroff(sea[2], COLOR_PAIR(2));
 
   pSea[0] = new_panel(sea[0]);
   pSea[1] = new_panel(sea[1]);
@@ -97,6 +100,8 @@ void initSeaTabs(void)
 
 void loadSea(void)
 {
+  touchwin(sbg);
+  wnoutrefresh(sbg);
   for (int i = 0; i < 3; i++) {
     touchwin(sea[i]);
     wnoutrefresh(sea[i]); 

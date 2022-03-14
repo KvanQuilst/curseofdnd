@@ -76,7 +76,7 @@ int main(int argc, char **argv)
   initHome();
   loadHome();
   doupdate();
-  if (col < 90)
+  if (col < 102)
     initSeaTabs();
   else
     initSeaTri();
