@@ -7,3 +7,4 @@
 #include "include.h"
 
 void loadHome(void);
+void initHome(void);

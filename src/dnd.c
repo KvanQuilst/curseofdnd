@@ -3,13 +3,13 @@
  * dnd.c
  */
 #include <locale.h>
+#include <stdlib.h>
 
-#include "attack.h"
 #include "include.h"
 #include "home.h"
-#include "health.h"
-#include "skills.h"
 #include "sea.h"
+
+#define ctrl(x) ((x) & 0x1f)
 
 /* Prototypes */ 
 static void init(void);
@@ -32,11 +32,22 @@ short sCha;
 
 short speed;
 
+void sizeError(int row, int col)
+{
+  endwin();
+  printf("Your window is too small!\n");
+  exit(0);
+}
+
 int main(int argc, char **argv)
 {
   setlocale(LC_ALL, "");
   int row, col;
-  //int ch;
+  int ch; 
+  short running = 1, update = 0;
+
+  enum {s_home, s_equip};
+  int state = s_home;
 
   name = "Gnommy Depp";
   race = "Mark of the Shadow Elf";
@@ -58,24 +69,70 @@ int main(int argc, char **argv)
   /* Prepare ncurses */
   init();
   getmaxyx(stdscr, row, col);
-  //initLogo();
+
+  if (row < 55 || col < 86)
+    sizeError(row, col);
+
+  initHome();
   loadHome();
-  //initSkills();
-  //initHealth();
-  //initAttack();
+  doupdate();
   /*if (col < 90)
     loadSeaTabs();
   else
     loadSeaTri();*/
 
-  doupdate();
 
-  /*while ((ch = getch()) != 'q') {
+  while (running) {
+    ch = getch();
 
-  }*/
+    /* Grab Input */
+    switch (ch) {
 
-  if (stdscr != NULL)
-    wgetch(stdscr);
+      /* u : level up */
+      case 'u':
+        break;
+
+      /* h : home */
+      case 'h':
+        update = state != s_home ? 1 : 0;
+        state = s_home;
+        break;
+
+      /* e : equipment attacks spells */
+      case 'e':
+        update = state != s_equip ? 1 : 0;
+        state = s_equip;
+        break;
+
+      /* l : load */
+      case 'l':
+        break;
+
+      /* s : save */
+      case 's':
+        break;
+
+      /* q : quit */
+      case 'q':
+        running = 0;
+        break;
+
+    }
+
+    switch (state) {
+      case s_home:
+        if (update) loadHome();
+        break;
+        
+      case s_equip:
+        if (update) loadSeaTri();
+        break;
+    }
+    doupdate();
+  }
+
+  //if (stdscr != NULL)
+    //wgetch(stdscr);
 
   endwin();
   return 0;
@@ -89,7 +146,7 @@ static void init()
   keypad(stdscr, TRUE);
   cbreak();
   noecho();
-  //refresh();
+  nonl();
   wnoutrefresh(stdscr);
 }
 

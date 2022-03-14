@@ -12,6 +12,10 @@ const int logo_r = 17;
 const int logo_c = 74;
 const int skill_r = 21;
 const int skill_c = 84;
+const int health_r = 13;
+const int health_c = 48;
+const int key_r = 13;
+const int key_c = 35;
 
 int row, col;
 short mStr, mDex, mCon, mInt, mWis, mCha;
@@ -25,17 +29,34 @@ static void skillsSaves(void);
 static void skillsOther(void);
 static int calcSkillMod(int score);
 
-void loadHome(void)
+static void health(void);
+static void key(void);
+
+void initHome(void)
 {
   getmaxyx(stdscr, row, col);
+  home[0] = newwin(logo_r, logo_c, 0, col/2 - logo_c/2);
+  home[1] = newwin(skill_r, skill_c, logo_r+1, col/2 - skill_c/2);
+  home[2] = newwin(health_r, health_c, logo_r+skill_r+2, col/2 - skill_c/2);
+  home[3] = newwin(key_r, key_c, logo_r+skill_r+2, col/2-skill_c/2+health_c+1);
 
   logo();
   skills();
-  //home[2] = newwin();
-  //home[3] = newwin();
+  health();
+  key();
   
   pHome[0] = new_panel(home[0]);
   pHome[1] = new_panel(home[1]);
+  pHome[2] = new_panel(home[2]);
+  pHome[3] = new_panel(home[3]);
+}
+
+void loadHome(void)
+{
+  for (int i = 0; i < 4; i++) {
+    touchwin(home[i]);
+    wnoutrefresh(home[i]);
+  }
   update_panels();
 }
 
@@ -54,7 +75,6 @@ static void logo(void)
     "     /________/__/ \\__/__/  /__/\\_______/________/__/  \\__/_____/      "
   }; 
 
-  home[0] = newwin(logo_r, logo_c, 0, col/2 - logo_c/2);
   wborder(home[0], ACS_VLINE, ACS_VLINE, ACS_HLINE, ACS_HLINE,
       ACS_ULCORNER, ACS_URCORNER, ACS_LLCORNER, ACS_LRCORNER);
     
@@ -94,7 +114,6 @@ static void logo(void)
 
 static void skills(void)
 {
-  home[1] = newwin(skill_r, skill_c, logo_r+1, col/2 - skill_c/2);
   wborder(home[1],ACS_VLINE,ACS_VLINE,ACS_HLINE,ACS_HLINE,
       ACS_ULCORNER,ACS_URCORNER,ACS_LLCORNER,ACS_LRCORNER);
 
@@ -271,4 +290,75 @@ static void skillsOther(void)
 static int calcSkillMod(int score)
 {
   return score/2-5;
+}
+
+static void health(void)
+{
+  char spd[4] = {0};
+
+  wborder(home[2],ACS_VLINE,ACS_VLINE,ACS_HLINE,ACS_HLINE,
+      ACS_ULCORNER,ACS_URCORNER,ACS_LLCORNER,ACS_LRCORNER);
+
+  mvwaddch(home[2], 1, health_c-1, ACS_BTEE);
+  wattron(home[2], COLOR_PAIR(5));
+  mvwaddch(home[2], 2, health_c-1, 'V');
+  mvwaddch(home[2], 3, health_c-1, 'i');
+  mvwaddch(home[2], 4, health_c-1, 't');
+  mvwaddch(home[2], 5, health_c-1, 'a');
+  mvwaddch(home[2], 6, health_c-1, 'l');
+  mvwaddch(home[2], 7, health_c-1, 'i');
+  mvwaddch(home[2], 8, health_c-1, 't');
+  mvwaddch(home[2], 9, health_c-1, 'y');
+  wattroff(home[2], COLOR_PAIR(5));
+  mvwaddch(home[2], 10, health_c-1, ACS_TTEE);
+
+  NBOX bArmor = {3, 15, 1, 1, "Armor", "Class", NULL};
+  namedBox(home[2], bArmor);
+
+  NBOX bInit = {3, 15, 1, 16, "Initiative", NULL, NULL};
+  namedBox(home[2], bInit);
+
+  snprintf(spd, 4, "%03d", speed);
+  NBOX bSpeed = {3, 15, 1, 31, "Speed", NULL, spd};
+  namedBox(home[2], bSpeed);
+
+  NBOX bMax = {3, 45, 5, 1, "Hit Point Maximum: ", "Temporary", NULL};
+  namedBox(home[2], bMax);
+  mvwaddstr(home[2], 7, 3, "Current");
+  mvwaddch(home[2], 6, 22, ACS_VLINE);
+  mvwaddch(home[2], 7, 22, ACS_BTEE);
+
+  NBOX bHit = {3, 22, 9, 1, "Hit Dice: ", NULL, NULL};
+  namedBox(home[2], bHit);
+
+  NBOX bDeath = {3, 22, 9, 23, "Death Saves", "Fail", "o  o  o    o  o  o"};
+  namedBox(home[2], bDeath);
+  mvwaddstr(home[2], 11, 25, "Success");
+
+  wnoutrefresh(home[2]);
+}
+
+static void key(void)
+{
+  wborder(home[3],ACS_VLINE,ACS_VLINE,ACS_HLINE,ACS_HLINE,
+      ACS_ULCORNER,ACS_URCORNER,ACS_LLCORNER,ACS_LRCORNER);
+
+  mvwaddch(home[3], 1, key_c-1, ACS_BTEE);
+  wattron(home[3], COLOR_PAIR(5));
+  mvwaddch(home[3], 2, key_c-1, 'K');
+  mvwaddch(home[3], 3, key_c-1, 'e');
+  mvwaddch(home[3], 4, key_c-1, 'y');
+  wattroff(home[3], COLOR_PAIR(5));
+  mvwaddch(home[3], 5, key_c-1, ACS_TTEE);
+
+  mvwprintw(home[3], 1, 2, "u : Level Up");
+  mvwprintw(home[3], 2, 2, "h : Home (This Screen)");
+  mvwprintw(home[3], 3, 2, "e : Equipment Attacks Spells");
+
+  mvwprintw(home[3], 4, 2, "l : Load Character Sheet");
+  mvwprintw(home[3], 5, 2, "s : Save Character Sheet");
+  mvwprintw(home[3], 6, 2, "n : Create New Character");
+  mvwprintw(home[3], 7, 2, "q : Quit");
+
+  wnoutrefresh(home[3]);
 }
