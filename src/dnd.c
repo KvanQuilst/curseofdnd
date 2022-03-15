@@ -91,16 +91,10 @@ int main(int argc, char **argv)
       case 'u':
         break;
 
-      /* h : home */
-      case 'h':
-        update = state != s_home ? 1 : 0;
-        state = s_home;
-        break;
-
       /* e : equipment attacks spells */
       case 'e':
-        update = state != s_equip ? 1 : 0;
-        state = s_equip;
+        update = 1;
+        state = state != s_home ? s_home : s_equip;
         break;
 
       /* l : load */

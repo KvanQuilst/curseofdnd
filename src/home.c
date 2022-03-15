@@ -350,11 +350,10 @@ static void key(void)
   mvwaddch(home[3], 5, key_c-1, ACS_TTEE);
 
   mvwprintw(home[3], 1, 2, "u : Level Up");
-  mvwprintw(home[3], 2, 2, "h : Home (This Screen)");
-  mvwprintw(home[3], 3, 2, "e : Equipment Attacks Spells");
+  mvwprintw(home[3], 2, 2, "e : Equipment Attacks Spells");
 
-  mvwprintw(home[3], 4, 2, "l : Load Character Sheet");
-  mvwprintw(home[3], 5, 2, "s : Save Character Sheet");
-  mvwprintw(home[3], 6, 2, "n : Create New Character");
-  mvwprintw(home[3], 7, 2, "q : Quit");
+  mvwprintw(home[3], 3, 2, "l : Load Character Sheet");
+  mvwprintw(home[3], 4, 2, "s : Save Character Sheet");
+  mvwprintw(home[3], 5, 2, "n : Create New Character");
+  mvwprintw(home[3], 6, 2, "q : Quit");
 }
