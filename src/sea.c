@@ -68,6 +68,11 @@ void initSeaTabs(void)
   mvwaddch(sbg, 1, 38, ACS_VLINE);
   mvwhline(sbg, 0, 27, ACS_HLINE, 11);
   mvwprintw(sbg, 1, 28, "Equipment");
+  wattroff(sbg, COLOR_PAIR(2));
+
+  mvwhline(sbg, 1, 39, ACS_HLINE, tri_c-39);
+  mvwaddch(sbg, 1, tri_c-1, ACS_URCORNER);
+  //mvwaddch(sbg, 1, tri_c-1, ACS_VLINE);
 
   /* Attacks */
   wattron(sea[0], COLOR_PAIR(1));
