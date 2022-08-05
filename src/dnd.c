@@ -16,13 +16,13 @@
 static void init(void);
 static void initColor(void);
 
-char *name;
+/*char *name;
 char *race;
 char *background;
 char *alignment;
 char *pclass;
 int level;
-int expr;
+int expr;*/
 
 short sStr;
 short sDex;
@@ -50,14 +50,17 @@ int main(int argc, char **argv)
   enum {s_home, s_equip, s_detail};
   int state = s_home;
 
-  load("gnommy_depp");
-  //name = "Gnommy Depp";
+  if (load("../saves/gnommy_depp") < 0) {
+    exit(1);
+  }
+  /*name = "Gnommy Depp";
   race = "Mark of the Shadow Elf";
   background = "Actor";
   alignment = "Chaotic Good";
-  pclass = "Rogue";
+  charClass = "Rogue";
+  
   level = 1;
-  expr = 100;
+  expr = 100;*/
 
   sStr = 12;
   sDex = 17;

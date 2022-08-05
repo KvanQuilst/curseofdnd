@@ -7,17 +7,36 @@
 //TODO combine max/short constants -> common.h?
 #define MAX_SHORT_LEN 64
 
+/* Definitions */
+enum ability_type {
+  Str, Dex, Con, Int, Wis, Cha 
+};
+
+enum skill_type {
+  acrobatics, animalHandling, arcana, atheletics, deception, history,
+  insight, intimidation, investigation, medicine, nature, perception,
+  performance, persuasion, religion, slightOfHand, stealth, survival
+};
+
+/* skills abilities correspond index correspond to skill_type index */
+extern enum ability_type skill_abil[];
+
 /* Player Details */
 extern char *name;
 extern char *race;
 extern char *background;
 extern char *alignment;
-extern char *pclass;
-extern char *pname;
+extern char *charClass;
+extern char *playerName;
 extern int level;
-extern int expr;
+extern int xp;
 
 /* Skills */
+extern short ability[6];
+extern short abilityMod[6];
+extern short throwProf[6];
+extern short skill[18];
+extern short skillProf[18];
 extern short sStr;
 extern short sDex;
 extern short sCon;

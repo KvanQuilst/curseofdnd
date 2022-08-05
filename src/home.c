@@ -109,8 +109,8 @@ static void logo(void)
   mvwprintw(home[0], 13, 72-strlen(alignment), "%s", alignment);
   mvwprintw(home[0], 13, 3+(71-3)/2-(strlen(race)/2), "%s", race);
   mvwprintw(home[0], 15, 2, "%s", background);
-  mvwprintw(home[0], 15, 3+(71-3)/2-((strlen(pclass)+5)/2), "%s:  %02d", pclass, level);
-  mvwprintw(home[0], 15, 68, "%4d", expr);
+  mvwprintw(home[0], 15, 3+(71-3)/2-((strlen(charClass)+5)/2), "%s:  %02d", charClass, level);
+  mvwprintw(home[0], 15, 68, "%4d", xp);
   wattroff(home[0], A_BOLD | COLOR_PAIR(5));
 }
 
