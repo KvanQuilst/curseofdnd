@@ -4,12 +4,16 @@
  */
 #pragma once
 
+//TODO combine max/short constants -> common.h?
+#define MAX_SHORT_LEN 64
+
 /* Player Details */
-extern const char *name;
-extern const char *race;
-extern const char *background;
-extern const char *alignment;
-extern const char *pclass;
+extern char *name;
+extern char *race;
+extern char *background;
+extern char *alignment;
+extern char *pclass;
+extern char *pname;
 extern int level;
 extern int expr;
 

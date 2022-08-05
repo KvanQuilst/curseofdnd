@@ -8,6 +8,7 @@
 #include "include.h"
 #include "home.h"
 #include "sea.h"
+#include "load.h"
 
 #define ctrl(x) ((x) & 0x1f)
 
@@ -15,11 +16,11 @@
 static void init(void);
 static void initColor(void);
 
-const char *name;
-const char *race;
-const char *background;
-const char *alignment;
-const char *pclass;
+char *name;
+char *race;
+char *background;
+char *alignment;
+char *pclass;
 int level;
 int expr;
 
@@ -49,7 +50,8 @@ int main(int argc, char **argv)
   enum {s_home, s_equip, s_detail};
   int state = s_home;
 
-  name = "Gnommy Depp";
+  load("gnommy_depp");
+  //name = "Gnommy Depp";
   race = "Mark of the Shadow Elf";
   background = "Actor";
   alignment = "Chaotic Good";
