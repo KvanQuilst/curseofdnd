@@ -4,9 +4,6 @@
  */
 #pragma once
 
-//TODO combine max/short constants -> common.h?
-#define MAX_SHORT_LEN 64
-
 /* Definitions */
 enum ability_type {
   Str, Dex, Con, Int, Wis, Cha 

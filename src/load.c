@@ -8,6 +8,7 @@
 #include<stdio.h>
 #include<string.h>
 
+#include "common.h"
 #include "char.h"
 #include "load.h"
 
@@ -84,8 +85,7 @@ int load(char *path)
   /* Get the character save */
   character = json_object_from_file(path);
   if (character == NULL) {
-    //fprintf(stderr, "%s\n", json_util_get_last_err());
-    fprintf(stderr, "%s: character name doesn't exist!\n", "APP_NAME");  
+    log_print("Character name doesn't exist!");  
     return -1;
   }
 
@@ -95,58 +95,59 @@ int load(char *path)
 
   object = json_object_object_get(character, "characterInfo");
   if (object == NULL) {
-    fprintf(stderr, "%s: characterInfo corrupt in save file!\n", "APP_NAME");
+    log_print("CharacterInfo corrupt in save file!");
     return -1;
   }
 
   /* Character Name */
   if (getShortStringField(object, jNAME, &name) < 0) {
-    fprintf(stderr, "%s: failed to get character name!\n", "APP_NAME");
+    log_print("Failed to get character name!");
     return -1;
   }
 
   /* Player Name */
   if (getShortStringField(object, jPLAYERNAME, &playerName) < 0) {
-    fprintf(stderr,  "%s: failed to get player name!\n", "APP_NAME");
+    log_print("Failed to get player name!");
     return -1;
   }
 
   /* Race */
   if (getShortStringField(object, jRACE, &race) < 0) {
-    fprintf(stderr, "%s: failed to get character race!\n", "APP_NAME");
+    log_print("Failed to get character race!");
     return -1;
   }
 
   /* Class */
   if (getShortStringField(object, jCLASS, &charClass) < 0) {
-    fprintf(stderr, "%s: failed to get character class!\n", "APP_NAME");
+    log_print("Failed to get character class!");
     return -1;
   }
 
   /* Background */
   if (getShortStringField(object, jBACKGROUND, &background) < 0) {
-    fprintf(stderr, "%s: failed to get character background!\n", "APP_NAME");
+    log_print("Failed to get character background!");
     return -1;
   }
 
   /* Alignment */
   if (getShortStringField(object, jALIGNMENT, &alignment) < 0) {
-    fprintf(stderr, "%s: failed to get character alignment!\n", "APP_NAME");
+    log_print("Failed to get character alignment!");
     return -1;
   }
 
   /* Level */
   if (getIntField(object, jLEVEL, &level) < 0) {
-    fprintf(stderr, "%s: failed to get character level!\n", "APP_NAME");
+    log_print("Failed to get character level!");
     return -1;
   }
 
   /* Experience */
   if (getIntField(object, jXP, &xp) < 0) {
-    fprintf(stderr, "%s: failed to get chracter experience!\n", "APP_NAME");
+    log_print("Failed to get chracter experience!");
     return -1;
   }
   
+  log_print("Character sheet <%s> successfully loaded!", name);
   return 0;
 }
 

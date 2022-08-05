@@ -5,6 +5,7 @@
 #include <locale.h>
 #include <stdlib.h>
 
+#include "common.h"
 #include "include.h"
 #include "home.h"
 #include "sea.h"
@@ -16,13 +17,7 @@
 static void init(void);
 static void initColor(void);
 
-/*char *name;
-char *race;
-char *background;
-char *alignment;
-char *pclass;
-int level;
-int expr;*/
+char *APP_NAME;
 
 short sStr;
 short sDex;
@@ -46,6 +41,11 @@ int main(int argc, char **argv)
   int row, col;
   int ch; 
   short running = 1, update = 0;
+  
+  APP_NAME = argv[0];
+
+  log_init();
+  log_print("Curse of DND is starting...");
 
   enum {s_home, s_equip, s_detail};
   int state = s_home;
