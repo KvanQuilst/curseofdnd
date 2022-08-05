@@ -1,0 +1,38 @@
+{
+  "characterInfo": {
+    "name": "Gnommy Depp",
+    "playerName": "Dylan",
+    "race": "Mark of the Shadow Elf",
+    "class": "Rogue",
+    "background": "Actor",
+    "level": 3,
+    "xp": 0
+  },
+
+  "skills": {
+    "ability": [
+      9, 19, 10, 13, 12, 15
+    ],
+    "skillProficiency": [
+      1, 0, 0, 0, 1, 0,
+      1, 0, 1, 0, 0, 1,
+      1, 1, 0, 0, 0, 0
+    ],
+    "saveProficiency": [
+      0, 1, 0, 1, 0, 0
+    ],
+    "proficiency": 2,
+    "inspriation": true
+  },
+
+  "stats": {
+    "maxHp": 16,
+    "currHp": 16,
+    "tempHp": 0,
+    "ac": 15,
+    "initiative": 4,
+    "speed": 30,
+    "hitDie": 8,
+    "savingThrow": 0
+  }
+}
