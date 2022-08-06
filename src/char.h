@@ -40,13 +40,14 @@ extern short skill[NUM_SKILLS];
 extern short skillProf[NUM_SKILLS];
 extern short inspiration;
 extern short proficiency;
+extern short passPerception;
+
 extern short sStr;
 extern short sDex;
 extern short sCon;
 extern short sInt;
 extern short sWis;
 extern short sCha;
-
 extern short mStr;
 extern short mDex;
 extern short mCon;

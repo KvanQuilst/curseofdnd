@@ -52,6 +52,7 @@ short skill[NUM_SKILLS];
 short skillProf[NUM_SKILLS];
 short inspiration;
 short proficiency;
+short passPerception;
 
 short maxHP, currHP, tempHP;
 short armor;
@@ -78,7 +79,8 @@ static void calculateChar(void)
   /* Calculate Skill Scores */
   for (i = 0; i < NUM_SKILLS; i++)
     skill[i] = abilityMod[skill_abil[i]] + proficiency * skillProf[i];
-    
+
+  passPerception = 10 + skill[perception];
 }
 
 /* Get a string field from an object */
