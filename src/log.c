@@ -9,16 +9,21 @@
 
 #include "common.h"
 
-int logStream = 2;
+int logStream = -1;
 
 int log_init()
 {
-  logStream = 2;
+  if(logStream == -1) 
+    logStream = 2;
   return 0;
 }
 
 void log_print(const char *fmt, ...)
 {
+  /* if log stream hasn't been initialized */
+  if (logStream == -1)
+    return;
+
   char msg[MAX_LONG_LEN];
   va_list args;
 

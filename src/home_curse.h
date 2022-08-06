@@ -1,7 +1,7 @@
 /*
  * Curse of DND - nCurses DND Character Sheet
- * dnd.h
+ * home_curse.h
  */
 #pragma once
 
-#include <ncurses.h>
+int drawHome(void);

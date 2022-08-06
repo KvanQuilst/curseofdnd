@@ -3,6 +3,7 @@
  * sea.c
  */
 
+#include "draw.h"
 #include "sea.h"
 
 WINDOW *sbg;
