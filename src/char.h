@@ -34,10 +34,12 @@ extern int xp;
 /* Skills */
 extern short ability[NUM_ABILITY];
 extern short abilityMod[NUM_ABILITY];
+extern short saveThrow[NUM_ABILITY];
 extern short saveProf[NUM_ABILITY];
 extern short skill[NUM_SKILLS];
 extern short skillProf[NUM_SKILLS];
 extern short inspiration;
+extern short proficiency;
 extern short sStr;
 extern short sDex;
 extern short sCon;

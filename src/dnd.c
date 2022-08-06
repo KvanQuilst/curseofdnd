@@ -15,18 +15,7 @@
 
 #define ctrl(x) ((x) & 0x1f)
 
-/* Prototypes */ 
-static void init(void);
-static void initColor(void);
-
 char *APP_NAME;
-
-short sStr;
-short sDex;
-short sCon;
-short sInt;
-short sWis;
-short sCha;
 
 void sizeError(int row, int col)
 {
@@ -54,27 +43,16 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  sStr = 12;
-  sDex = 17;
-  sCon = 13;
-  sInt = 15;
-  sWis = 20;
-  sCha = 19;
-
   /* Prepare ncurses */
   if (initCurses() < 0)
     exit(1);
 
-  getmaxyx(stdscr, row, col);
-
-  if (row < 55 || col < 86)
-    sizeError(row, col);
+  if (rowSize < 55 || colSize < 86)
+    sizeError(rowSize, colSize);
 
   drawHome();
-  /*initHome();
-  loadHome();*/
   doupdate();
-  if (col < 102)
+  if (colSize < 102)
     initSeaTabs();
   else
     initSeaTri();
@@ -124,27 +102,4 @@ int main(int argc, char **argv)
 
   endwin();
   return 0;
-}
-
-static void init()
-{
-  initscr();
-  curs_set(0);
-  initColor();
-  keypad(stdscr, TRUE);
-  cbreak();
-  noecho();
-  nonl();
-  wnoutrefresh(stdscr);
-}
-
-static void initColor() {
-  start_color();
-  use_default_colors();
-  init_pair(1, COLOR_RED, -1);
-  init_pair(2, COLOR_GREEN, -1);
-  init_pair(3, COLOR_YELLOW, -1);
-  init_pair(4, COLOR_CYAN, -1);
-  init_pair(5, COLOR_BLUE, -1);
-  init_pair(6, COLOR_MAGENTA, -1);
 }

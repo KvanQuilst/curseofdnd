@@ -45,19 +45,41 @@ short level;
 int xp;
 
 short ability[NUM_ABILITY];
+short abilityMod[NUM_ABILITY];
+short saveThrow[NUM_ABILITY];
 short saveProf[NUM_ABILITY];
+short skill[NUM_SKILLS];
 short skillProf[NUM_SKILLS];
 short inspiration;
+short proficiency;
 
-short maxHP;
-short currHP;
-short tempHP;
+short maxHP, currHP, tempHP;
 short armor;
 short initiative;
 short speed;
 short hitDie;
 short deathSave;
 
+static void calculateChar(void)
+{
+  int i;
+
+  /* Calculate Proficiency */
+  proficiency = (level-1)%4 + 2;
+
+  /* Calculate Abiltiy Modifiers */
+  for (i = 0; i < NUM_ABILITY; i++)
+    abilityMod[i] = ability[i]/2-5;
+
+  /* Calculate Saving Throws */
+  for (i = 0; i < NUM_ABILITY; i++)
+    saveThrow[i] = abilityMod[i] + proficiency * saveProf[i];
+
+  /* Calculate Skill Scores */
+  for (i = 0; i < NUM_SKILLS; i++)
+    skill[i] = abilityMod[skill_abil[i]] + proficiency * skillProf[i];
+    
+}
 
 /* Get a string field from an object */
 static int getShortStringField(json_object *object, const char *fieldName, char **var)
@@ -131,10 +153,8 @@ static int getIntArrayField(json_object *object, const char *fieldName,
   array_list *arr;
   size_t size, i;
 
-  if (object == NULL || !json_object_is_type(object, json_type_object)) {
-    log_print("'object' is either NULL or not type json_type_object!");
+  if (object == NULL || !json_object_is_type(object, json_type_object))
     return -1;
-  }
 
   field = json_object_object_get(object, fieldName);
   if (field == NULL || !json_object_is_type(field, json_type_array))
@@ -315,6 +335,8 @@ int load(char *path)
     log_print("[ERROR] Failed to get death save status!");
     return -1;
   }
+
+  calculateChar();
   
   log_print("Character sheet <%s> successfully loaded!", name);
   return 0;

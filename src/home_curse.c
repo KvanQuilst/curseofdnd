@@ -13,7 +13,7 @@ WINDOW *home;
 
 static int initHome(void)
 {
-  const char *dndLogo[10] = {
+  const char *dndLogo[] = {
     "     _______  ___   _____    __________  ______________  __    ___     ",
     "    /  ___  \\/  /  /  /  \\  /  /  _____)/ _____/  ___  \\/  \\  /  /_____",
     "   /  /  /  /  /  /  /    \\/  /  /  ___/  __) /  /  /  /    \\/  /  ___/",
@@ -53,16 +53,10 @@ static int initHome(void)
     mvwprintw(home, i+logo_y, logo_x + (colSize%2), "%s", dndLogo[i]);
   wattroff(home, COLOR_PAIR(MAGENTA));
 
-  /* Curse of DND */
+  /* Text */
   mvwprintw(home, y_mid, x_mid-21, "Curse of DnD - nCurses DnD Character Sheet");
-
-  /* New */
   mvwprintw(home, y_mid+3, x_mid-9, "1:  New Character");
-
-  /* Load */
   mvwprintw(home, y_mid+5, x_mid-9, "2:  Load Character");
-
-  /* Help */
   mvwprintw(home, y_mid+7, x_mid-9, "3:  Help");
 
   return 0;
@@ -83,4 +77,10 @@ int drawHome(void)
   wnoutrefresh(home);
 
   return 0;
+}
+
+void destroyHome(void)
+{
+  if (home != NULL)
+    delwin(home);
 }
