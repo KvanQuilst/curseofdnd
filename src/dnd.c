@@ -26,8 +26,6 @@ short sInt;
 short sWis;
 short sCha;
 
-short speed;
-
 void sizeError(int row, int col)
 {
   endwin();

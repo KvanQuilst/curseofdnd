@@ -5,6 +5,9 @@
 #pragma once
 
 /* Definitions */
+#define NUM_ABILITY 6
+#define NUM_SKILLS 18
+
 enum ability_type {
   Str, Dex, Con, Int, Wis, Cha 
 };
@@ -25,15 +28,16 @@ extern char *background;
 extern char *alignment;
 extern char *charClass;
 extern char *playerName;
-extern int level;
+extern short level;
 extern int xp;
 
 /* Skills */
-extern short ability[6];
-extern short abilityMod[6];
-extern short throwProf[6];
-extern short skill[18];
-extern short skillProf[18];
+extern short ability[NUM_ABILITY];
+extern short abilityMod[NUM_ABILITY];
+extern short saveProf[NUM_ABILITY];
+extern short skill[NUM_SKILLS];
+extern short skillProf[NUM_SKILLS];
+extern short inspiration;
 extern short sStr;
 extern short sDex;
 extern short sCon;
@@ -48,8 +52,12 @@ extern short mInt;
 extern short mWis;
 extern short mCha;
 
-/* Vitality */
+/* Stats */
+extern short maxHP;
+extern short currHP;
+extern short tempHP;
 extern short armor;
 extern short initiative;
 extern short speed;
-extern char *hitDice;
+extern short hitDie;
+extern short deathSave;

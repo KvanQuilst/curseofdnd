@@ -22,8 +22,7 @@
     "saveProficiency": [
       0, 1, 0, 1, 0, 0
     ],
-    "proficiency": 2,
-    "inspriation": true
+    "inspiration": true
   },
 
   "stats": {
@@ -34,6 +33,6 @@
     "initiative": 4,
     "speed": 30,
     "hitDie": 8,
-    "savingThrow": 0
+    "deathSaves": 0
   }
 }
