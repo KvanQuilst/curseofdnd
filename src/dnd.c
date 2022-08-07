@@ -8,8 +8,7 @@
 #include "common.h"
 #include "draw.h"
 #include "include.h"
-//#include "home.h"
-#include "home_curse.h"
+#include "home.h"
 #include "sea.h"
 #include "load.h"
 

@@ -1,10 +1,20 @@
 /*
  * Curse of DND - nCurses DND Character Sheet
- * dnd.h
+ * home.h
  */
 #pragma once
 
-#include "include.h"
+/*
+ * Initializes the home view if it has not been created yet
+ * Brings forward the home home view on stdscr
+ *
+ * returns: 0 on success, -1 on error
+ */
+int drawHome(void);
 
-void loadHome(void);
-void initHome(void);
+/*
+ * Destroys the home view if it has been created
+ *
+ * returns: 0 on success, -1 on error
+ */
+int destroyHome(void);
