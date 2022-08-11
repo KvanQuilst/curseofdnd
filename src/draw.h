@@ -7,7 +7,7 @@
 #include <string.h>
 
 enum color {
-  WHITE, RED, GREEN, YELLOW, CYAN, BLUE, MAGENTA
+  WHITE, RED, GREEN, YELLOW, CYAN, BLUE, MAGENTA, BLACK
 };
 
 typedef struct NBOX_st NBOX;
