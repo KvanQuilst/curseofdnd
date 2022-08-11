@@ -40,7 +40,7 @@ extern int skill[NUM_SKILLS];
 extern int skillProf[NUM_SKILLS];
 extern int inspiration;
 extern int proficiency;
-extern int passPerception;
+extern int passWisdom;
 
 extern short sStr;
 extern short sDex;

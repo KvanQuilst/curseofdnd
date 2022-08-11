@@ -39,7 +39,6 @@
 #define SKILL_L 18
 
 WINDOW *sheet;
-
 static int initAbil(void)
 {
   char score[4], mod[4];
@@ -92,6 +91,22 @@ static int initAbil(void)
     return -1;
 }
 
+static char *profCharSave(enum ability_type abil)
+{
+  if (saveProf[abil] == 0)
+    return " ";
+  return "*";
+}
+
+static char *profCharSkill(enum skill_type skill) 
+{
+  if (skillProf[skill] == 0)
+    return "  ";
+  if (skillProf[skill] == 1)
+    return "* ";
+  return "**";
+}
+
 static int initSkill(void)
 {
   char val[4];
@@ -100,6 +115,10 @@ static int initSkill(void)
   const char *save[2][3] = {
     "Strength", "Dexterity", "Constitution",
     "Intelligence", "Wisdom", "Charisma"
+  };
+
+  const enum color saveColor[2][3] = {
+    RED, GREEN, YELLOW, CYAN, BLUE, MAGENTA
   };
 
   const char *skills[2][9] = {
@@ -131,32 +150,54 @@ static int initSkill(void)
                   "Proficiency", NULL, val, COLOR_PAIR(WHITE)};
   if (namedBox(sheet, profBox) < 0) return -1;
 
-  sprintf(val, "%d", passPerception);
+  sprintf(val, "%d", passWisdom);
   NBOX percBox = {ABILITY_H, ABILITY_W, XNUM_L, PASSP_C,
-                  "Passive", "Perception", val, COLOR_PAIR(BLUE)};
+                  "Passive Wisdom", NULL, val, COLOR_PAIR(BLUE)};
   if (namedBox(sheet, percBox) < 0) return -1;
 
   /* Saving Throws */
+
   NBOX saveBox = {SAVE_H, SKILL_W, SAVE_L, SKILL_C,
                   NULL, "Saving Throws", NULL, COLOR_PAIR(WHITE)};
   if (namedBox(sheet, saveBox) < 0) return -1;
+  
+  /* Left Side */
+  for (i = 0; i < 3; i++) {
+    mvwprintw(sheet, SAVE_L+i+1, SKILL_C+2, "%s  %+d",
+        profCharSave(i), saveThrow[i]);
+    wattron(sheet, COLOR_PAIR(saveColor[0][i]));
+    mvwprintw(sheet, SAVE_L+i+1, SKILL_C+9, "%s", save[0][i]);
+    wattroff(sheet, COLOR_PAIR(saveColor[0][i]));
+  }
+
+  /* Right Side */
+  for (i = 0; i < 3; i++) {
+    mvwprintw(sheet, SAVE_L+i+1, SKILL_C+30, "%s  %+d",
+        profCharSave(i+3), saveThrow[i+3]);
+    wattron(sheet, COLOR_PAIR(saveColor[1][i]));
+    mvwprintw(sheet, SAVE_L+i+1, SKILL_C+37, "%s", save[1][i]);
+    wattroff(sheet, COLOR_PAIR(saveColor[1][i]));
+  }
 
   /* Skills */
+
   NBOX skillBox = {SKILL_H, SKILL_W, SKILL_L, SKILL_C,
                    NULL, "Skills", NULL, COLOR_PAIR(WHITE)};
   if (namedBox(sheet, skillBox) < 0) return -1;
 
+  /* Left Side */
   for (i = 0; i < 9; i++) {
-    mvwprintw(sheet, SKILL_L+i+1, SKILL_C+2, "   %+d  %s", 
-        skill[i], skills[0][i]);
+    mvwprintw(sheet, SKILL_L+i+1, SKILL_C+2, "%s %+d  %s", 
+        profCharSkill(i*2), skill[i*2], skills[0][i]);
     wattron(sheet, COLOR_PAIR(skillColor[0][i]));
     mvwprintw(sheet, SKILL_L+i+1, SKILL_C+25, "%s", abil[0][i]);
     wattroff(sheet, COLOR_PAIR(skillColor[0][i]));
   }
 
+  /* Right Side */
   for (i = 0; i < 9; i++) {
-    mvwprintw(sheet, SKILL_L+i+1, SKILL_C+30, "   %+d  %s", 
-        skill[i+9], skills[1][i]);
+    mvwprintw(sheet, SKILL_L+i+1, SKILL_C+30, "%s %+d  %s", 
+        profCharSkill(i*2+1), skill[i*2+1], skills[1][i]);
     wattron(sheet, COLOR_PAIR(skillColor[1][i]));
     mvwprintw(sheet, SKILL_L+i+1, SKILL_C+53, "%s", abil[1][i]);
     wattroff(sheet, COLOR_PAIR(skillColor[1][i]));
