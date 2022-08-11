@@ -29,8 +29,8 @@
 #define CHA_L  27
 
 /* Skill Positions */
-#define PROF_C  23
-#define PASSP_C 45
+#define PROF_C  25
+#define PASSW_C 52
 #define SAVE_H  6
 #define SKILL_H 12
 #define SKILL_W 58
@@ -44,7 +44,7 @@ static int initAbil(void)
   char score[4], mod[4];
 
   NBOX inspBox = {ABILITY_H, ABILITY_W, XNUM_L, ABILITY_C, 
-                  "Inspiration", NULL, "**", WHITE};
+                  "Inspiration", NULL, inspiration == 1 ? "**" : "  ", WHITE};
   if (namedBox(sheet, inspBox) < 0)
     return -1;
 
@@ -89,13 +89,8 @@ static int initAbil(void)
                  "Charisma", score, mod, COLOR_PAIR(MAGENTA)};
   if (namedBox(sheet, chaBox) < 0)
     return -1;
-}
 
-static char *profCharSave(enum ability_type abil)
-{
-  if (saveProf[abil] == 0)
-    return " ";
-  return "*";
+  return 0;
 }
 
 static char *profCharSkill(enum skill_type skill) 
@@ -113,36 +108,36 @@ static int initSkill(void)
   int i;
 
   const char *save[2][3] = {
-    "Strength", "Dexterity", "Constitution",
-    "Intelligence", "Wisdom", "Charisma"
+    {"Strength", "Dexterity", "Constitution"},
+    {"Intelligence", "Wisdom", "Charisma"}
   };
 
   const enum color saveColor[2][3] = {
-    RED, GREEN, YELLOW, CYAN, BLUE, MAGENTA
+    {RED, GREEN, YELLOW}, {CYAN, BLUE, MAGENTA}
   };
 
   const char *skills[2][9] = {
     /* Right Hand Side */
-    "Acrobatics", "Arcana", "Deception", "Insight", "Investigation",
-    "Nature", "Performance", "Religion", "Stealth",
+    {"Acrobatics", "Arcana", "Deception", "Insight", "Investigation",
+    "Nature", "Performance", "Religion", "Stealth"},
 
     /* Left Hand Side */
-    "Animal Handling", "Athletics", "History", "Intimidation",
-    "Medicine", "Perception", "Persuasion", "Sleight of Hand", "Survival"
+    {"Animal Handling", "Athletics", "History", "Intimidation",
+    "Medicine", "Perception", "Persuasion", "Sleight of Hand", "Survival"}
   };
 
   const char *abil[2][9] = {
-    "Dex", "Int", "Cha", "Wis", "Int",
-    "Int", "Cha", "Int", "Dex",
-    "Wis", "Str", "Int", "Cha",
-    "Wis", "Wis", "Cha", "Dex", "Wis"
+    {"Dex", "Int", "Cha", "Wis", "Int",
+    "Int", "Cha", "Int", "Dex"},
+    {"Wis", "Str", "Int", "Cha",
+    "Wis", "Wis", "Cha", "Dex", "Wis"}
   };
 
   const enum color skillColor[2][9] = {
-    GREEN, CYAN, MAGENTA, BLUE, CYAN,
-    CYAN, MAGENTA, CYAN, GREEN,
-    BLUE, RED, CYAN, MAGENTA, 
-    BLUE, BLUE, MAGENTA, GREEN, BLUE
+    {GREEN, CYAN, MAGENTA, BLUE, CYAN,
+    CYAN, MAGENTA, CYAN, GREEN},
+    {BLUE, RED, CYAN, MAGENTA, 
+    BLUE, BLUE, MAGENTA, GREEN, BLUE}
   };
 
   sprintf(val, "%+d", proficiency);
@@ -151,7 +146,7 @@ static int initSkill(void)
   if (namedBox(sheet, profBox) < 0) return -1;
 
   sprintf(val, "%d", passWisdom);
-  NBOX percBox = {ABILITY_H, ABILITY_W, XNUM_L, PASSP_C,
+  NBOX percBox = {ABILITY_H, ABILITY_W, XNUM_L, PASSW_C,
                   "Passive Wisdom", NULL, val, COLOR_PAIR(BLUE)};
   if (namedBox(sheet, percBox) < 0) return -1;
 
@@ -164,7 +159,7 @@ static int initSkill(void)
   /* Left Side */
   for (i = 0; i < 3; i++) {
     mvwprintw(sheet, SAVE_L+i+1, SKILL_C+2, "%s  %+d",
-        profCharSave(i), saveThrow[i]);
+        saveProf[i] == 1 ? "*" : " ", saveThrow[i]);
     wattron(sheet, COLOR_PAIR(saveColor[0][i]));
     mvwprintw(sheet, SAVE_L+i+1, SKILL_C+9, "%s", save[0][i]);
     wattroff(sheet, COLOR_PAIR(saveColor[0][i]));
@@ -173,7 +168,7 @@ static int initSkill(void)
   /* Right Side */
   for (i = 0; i < 3; i++) {
     mvwprintw(sheet, SAVE_L+i+1, SKILL_C+30, "%s  %+d",
-        profCharSave(i+3), saveThrow[i+3]);
+        saveProf[i+3] == 1 ? "*" : " ", saveThrow[i+3]);
     wattron(sheet, COLOR_PAIR(saveColor[1][i]));
     mvwprintw(sheet, SAVE_L+i+1, SKILL_C+37, "%s", save[1][i]);
     wattroff(sheet, COLOR_PAIR(saveColor[1][i]));
@@ -203,6 +198,13 @@ static int initSkill(void)
     wattroff(sheet, COLOR_PAIR(skillColor[1][i]));
   }
 
+  return 0;
+}
+
+static int initVital(void)
+{
+
+  return 0;
 }
 
 static int initSheet(void)
@@ -226,13 +228,16 @@ static int initSheet(void)
   mvwprintw(sheet, CHARBOX_L1, CHARBOX_C2, "Background: %-*s", fieldSize-12, background);
   mvwprintw(sheet, CHARBOX_L2, CHARBOX_C2, "Experience: %-*d", fieldSize-12, xp);
   mvwprintw(sheet, CHARBOX_L1, CHARBOX_C3, "Player Name: %-*s", fieldSize-13, playerName);
-  mvwprintw(sheet, CHARBOX_L2, CHARBOX_C3, "Alignmnet:   %-*s", fieldSize-13, alignment);
+  mvwprintw(sheet, CHARBOX_L2, CHARBOX_C3, "Alignment:   %-*s", fieldSize-13, alignment);
 
   /* Abilities */
   if (initAbil() < 0) return -1;
 
   /* Skills */
   if (initSkill() < 0) return -1;
+
+  /* Vitality */
+  if (initVital() < 0) return -1;
 
   return 0;
 }
