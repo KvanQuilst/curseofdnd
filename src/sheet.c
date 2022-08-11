@@ -3,6 +3,8 @@
  * sheet.c
  */
 
+#include <stdlib.h>
+
 #include "common.h"
 #include "draw.h"
 
@@ -12,9 +14,7 @@
 #define CHARNAME_C 3
 #define CHARBOX_L1 2
 #define CHARBOX_L2 6
-#define CHARBOX_C1 31
-#define CHARBOX_C2 64
-#define CHARBOX_C3 102
+#define CHARBOX_C1 26
 
 /* Ability Positions */
 #define ABILITY_H 3
@@ -208,6 +208,11 @@ static int initSkill(void)
 static int initSheet(void)
 {
   const char *title = "Curse of DnD - Dungeons and Dragons Character Sheet";
+  const int fieldSize = (colSize - 32)/3;
+  const int CHARBOX_C2 = CHARBOX_C1 + fieldSize + 2;
+  const int CHARBOX_C3 = CHARBOX_C2 + fieldSize + 2;
+  char *classTrim = malloc((fieldSize-9) * sizeof(char));
+  snprintf(classTrim, fieldSize-10, "%s", charClass);
 
   sheet = newwin(rowSize, colSize, 0, 0);
 
@@ -216,12 +221,12 @@ static int initSheet(void)
   if (namedBox(sheet, charBox) < 0)
     return -1;
   mvwprintw(sheet, CHARNAME_L, CHARNAME_C, "%s", name);
-  mvwprintw(sheet, CHARBOX_L1, CHARBOX_C1, "Class: %s %d", charClass, level);
-  mvwprintw(sheet, CHARBOX_L2, CHARBOX_C1, "Race:  %s", race);
-  mvwprintw(sheet, CHARBOX_L1, CHARBOX_C2, "Background: %s", background);
-  mvwprintw(sheet, CHARBOX_L2, CHARBOX_C2, "Experience: %d", xp);
-  mvwprintw(sheet, CHARBOX_L1, CHARBOX_C3, "Player Name: %s", playerName);
-  mvwprintw(sheet, CHARBOX_L2, CHARBOX_C3, "Alignmnet:   %s", alignment);
+  mvwprintw(sheet, CHARBOX_L1, CHARBOX_C1, "Class: %s %d", classTrim, level);
+  mvwprintw(sheet, CHARBOX_L2, CHARBOX_C1, "Race:  %-*s", fieldSize-7, race);
+  mvwprintw(sheet, CHARBOX_L1, CHARBOX_C2, "Background: %-*s", fieldSize-12, background);
+  mvwprintw(sheet, CHARBOX_L2, CHARBOX_C2, "Experience: %-*d", fieldSize-12, xp);
+  mvwprintw(sheet, CHARBOX_L1, CHARBOX_C3, "Player Name: %-*s", fieldSize-13, playerName);
+  mvwprintw(sheet, CHARBOX_L2, CHARBOX_C3, "Alignmnet:   %-*s", fieldSize-13, alignment);
 
   /* Abilities */
   if (initAbil() < 0) return -1;

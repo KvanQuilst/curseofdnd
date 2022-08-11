@@ -47,8 +47,8 @@ int main(int argc, char **argv)
   if (initCurses() < 0)
     exit(1);
 
-  if (rowSize < 55 || colSize < 86)
-    sizeError(rowSize, colSize);
+  //if (rowSize < 55 || colSize < 86)
+    //sizeError(rowSize, colSize);
 
   drawSheet();
   drawHome();
