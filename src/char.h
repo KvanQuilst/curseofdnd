@@ -32,15 +32,15 @@ extern short level;
 extern int xp;
 
 /* Skills */
-extern short ability[NUM_ABILITY];
-extern short abilityMod[NUM_ABILITY];
-extern short saveThrow[NUM_ABILITY];
-extern short saveProf[NUM_ABILITY];
-extern short skill[NUM_SKILLS];
-extern short skillProf[NUM_SKILLS];
-extern short inspiration;
-extern short proficiency;
-extern short passPerception;
+extern int ability[NUM_ABILITY];
+extern int abilityMod[NUM_ABILITY];
+extern int saveThrow[NUM_ABILITY];
+extern int saveProf[NUM_ABILITY];
+extern int skill[NUM_SKILLS];
+extern int skillProf[NUM_SKILLS];
+extern int inspiration;
+extern int proficiency;
+extern int passPerception;
 
 extern short sStr;
 extern short sDex;

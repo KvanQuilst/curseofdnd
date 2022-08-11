@@ -3,7 +3,7 @@ CC      := gcc
 CFLAGS  := -g #-Wall
 LFLAGS  := -ljson-c -lpanel `ncursesw6-config --cflags --libs`
 
-${PROGRAM}: dnd.o draw.o home.o sea.o load.o log.c char.c
+${PROGRAM}: dnd.o draw.o home.o sheet.o sea.o load.o log.c char.c
 	$(CC) $(LFLAGS) -o ${PROGRAM} $^
 
 .c.o:

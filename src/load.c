@@ -44,15 +44,15 @@ char *alignment;
 short level;
 int xp;
 
-short ability[NUM_ABILITY];
-short abilityMod[NUM_ABILITY];
-short saveThrow[NUM_ABILITY];
-short saveProf[NUM_ABILITY];
-short skill[NUM_SKILLS];
-short skillProf[NUM_SKILLS];
-short inspiration;
-short proficiency;
-short passPerception;
+int ability[NUM_ABILITY];
+int abilityMod[NUM_ABILITY];
+int saveThrow[NUM_ABILITY];
+int saveProf[NUM_ABILITY];
+int skill[NUM_SKILLS];
+int skillProf[NUM_SKILLS];
+int inspiration;
+int proficiency;
+int passPerception;
 
 short maxHP, currHP, tempHP;
 short armor;
@@ -69,8 +69,10 @@ static void calculateChar(void)
   proficiency = (level-1)%4 + 2;
 
   /* Calculate Abiltiy Modifiers */
-  for (i = 0; i < NUM_ABILITY; i++)
+  for (i = 0; i < NUM_ABILITY; i++) {
     abilityMod[i] = ability[i]/2-5;
+    log_print("abilityMod[%d] = %d", i, abilityMod[i]);
+  }
 
   /* Calculate Saving Throws */
   for (i = 0; i < NUM_ABILITY; i++)
@@ -80,7 +82,7 @@ static void calculateChar(void)
   for (i = 0; i < NUM_SKILLS; i++)
     skill[i] = abilityMod[skill_abil[i]] + proficiency * skillProf[i];
 
-  passPerception = 10 + skill[perception];
+  passPerception = 10 + proficiency + abilityMod[Wis];
 }
 
 /* Get a string field from an object */
@@ -148,7 +150,7 @@ static int getBoolField(json_object *object, const char *fieldName, int *var)
 
 /* Get an array from an object */
 static int getIntArrayField(json_object *object, const char *fieldName, 
-    int *var, int maxSize)
+    int (*var)[], int maxSize)
 {
   json_object *field;
   json_object *num;
@@ -168,10 +170,9 @@ static int getIntArrayField(json_object *object, const char *fieldName,
     if (num == NULL || !json_object_is_type(num, json_type_int))
       return -1;
 
-    var[i] = json_object_get_int(num);
+    (*var)[i] = json_object_get_int(num);
+    log_print("[INFO] %d", (*var)[i]);
   }
-
-  num = json_object_array_get_idx(field, 0);
 
   return 0;
 }
@@ -258,25 +259,28 @@ int load(char *path)
   }
 
   /* Ability */
-  if (getIntArrayField(object, jABILITY, (int *) ability, NUM_ABILITY) < 0) {
+  log_print("Getting ability scores...");
+  if (getIntArrayField(object, jABILITY, &ability, NUM_ABILITY) < 0) {
     log_print("[ERROR] Failed to get ability scores!");
     return -1;
   }
 
   /* Skills Proficiency */
-  if (getIntArrayField(object, jSKILLPROF, (int *) skillProf, NUM_SKILLS) < 0) {
+  log_print("Getting skill proficiencies...");
+  if (getIntArrayField(object, jSKILLPROF, &skillProf, NUM_SKILLS) < 0) {
     log_print("[ERROR] Failed to get skill proficiencies!");
     return -1;
   }
 
   /* Save Proficiecny */
-  if (getIntArrayField(object, jSAVEPROF, (int *) saveProf, NUM_ABILITY) < 0) {
+  log_print("Getting save proficiencies...");
+  if (getIntArrayField(object, jSAVEPROF, &saveProf, NUM_ABILITY) < 0) {
     log_print("[ERROR] Failed to get saving throw proficiencies!");
     return -1;
   }
 
   /* Inspiration */
-  if (getBoolField(object, jINSPIRATION, (int *) &inspiration) < 0) {
+  if (getBoolField(object, jINSPIRATION, &inspiration) < 0) {
     log_print("[ERROR] Failed to get inspiration!");
     return -1;
   }

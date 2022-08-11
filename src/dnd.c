@@ -9,6 +9,7 @@
 #include "draw.h"
 #include "include.h"
 #include "home.h"
+#include "sheet.h"
 #include "sea.h"
 #include "load.h"
 
@@ -49,6 +50,7 @@ int main(int argc, char **argv)
   if (rowSize < 55 || colSize < 86)
     sizeError(rowSize, colSize);
 
+  drawSheet();
   drawHome();
   doupdate();
   if (colSize < 102)
@@ -67,7 +69,7 @@ int main(int argc, char **argv)
         break;
 
       /* e : equipment attacks spells */
-      case 'e':
+      case '2':
         update = 1;
         state = state != s_home ? s_home : s_equip;
         break;
@@ -93,7 +95,7 @@ int main(int argc, char **argv)
         break;
         
       case s_equip:
-        if (update) loadSea();
+        if (update) drawSheet();
         break;
     }
     doupdate();

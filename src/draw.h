@@ -7,14 +7,14 @@
 #include <string.h>
 
 enum color {
-  RED=1, GREEN, YELLOW, CYAN, BLUE, MAGENTA
+  WHITE, RED, GREEN, YELLOW, CYAN, BLUE, MAGENTA
 };
 
 typedef struct NBOX_st NBOX;
 struct NBOX_st {
   int l, c;
   int y, x;
-  char *l1, *l2, *content;
+  const char *l1, *l2, *content;
   enum color color;
 };
 

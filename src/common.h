@@ -7,7 +7,7 @@
 #include "log.h"
 #include "char.h"
 
-#define MAX_SHORT_LEN 64
+#define MAX_SHORT_LEN 24
 #define MAX_LONG_LEN 1024
 
 extern char *APP_NAME;
