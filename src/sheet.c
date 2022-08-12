@@ -19,6 +19,7 @@
 /* Ability Positions */
 #define ABILITY_H 3
 #define ABILITY_W 18
+#define ABILITY_L 12
 #define ABILITY_C 0
 #define XNUM_L 9
 #define STR_L  12
@@ -43,62 +44,66 @@
 #define HEALTH_W 24
 #define HEALTH_L 9
 #define HEALTH_C 78
+
 #define BATTLE_H 3
 #define BATTLE_W 24
 #define BATTLE_L 12
 #define BATTLE_C 78
 
+#define HITDIE_H 3
+#define HITDIE_W 12
+#define HITDIE_L 15
+#define HITDIE_C 78
+
+#define DEATH_H 3
+#define DEATH_W 12
+#define DEATH_L 15
+#define DEATH_C 90
+
+/* Spell Positions */
+#define SPLCST_H 3
+#define SPLCST_W 16
+#define SPLCST_L 19
+#define SPLCST_C 82
+
+#define SPLSAV_H 3
+#define SPLSAV_W 16
+#define SPLSAV_L 23
+#define SPLSAV_C 82
+
+#define SPLATK_H 3
+#define SPLATK_W 16
+#define SPLATK_L 27
+#define SPLATK_C 82
+
 WINDOW *sheet;
 static int initAbil(void)
 {
   char score[4], mod[4];
+  int i; 
+
+  const char *abil[] = {
+    "Strength", "Dexterity", "Constitution",
+    "Intelligence", "Wisdom", "Charisma"
+  };
+
+  const enum color abilColor[] = {
+    RED, GREEN, YELLOW, CYAN, BLUE, MAGENTA
+  };
 
   NBOX inspBox = {ABILITY_H, ABILITY_W, XNUM_L, ABILITY_C, 
                   "Inspiration", NULL, c.inspiration == 1 ? "**" : "  ", WHITE};
   if (namedBox(sheet, inspBox) < 0)
     return -1;
 
-  sprintf(score, "%d", c.ability[Str]);
-  sprintf(mod, "%+d", c.abilityMod[Str]);
-  NBOX strBox = {ABILITY_H, ABILITY_W, STR_L, ABILITY_C,
-                 "Strength", score, mod, COLOR_PAIR(RED)};
-  if (namedBox(sheet, strBox) < 0)
-    return -1;
-
-  sprintf(score, "%d", c.ability[Dex]);
-  sprintf(mod, "%+d", c.abilityMod[Dex]);
-  NBOX dexBox = {ABILITY_H, ABILITY_W, DEX_L, ABILITY_C,
-                 "Dexterity", score, mod, COLOR_PAIR(GREEN)};
-  if (namedBox(sheet, dexBox) < 0)
-    return -1;
-
-  sprintf(score, "%d", c.ability[Con]);
-  sprintf(mod, "%+d", c.abilityMod[Con]);
-  NBOX conBox = {ABILITY_H, ABILITY_W, CON_L, ABILITY_C,
-                 "Constitution", score, mod, COLOR_PAIR(YELLOW)};
-  if (namedBox(sheet, conBox) < 0)
-    return -1;
-
-  sprintf(score, "%d", c.ability[Int]);
-  sprintf(mod, "%+d", c.abilityMod[Int]);
-  NBOX intBox = {ABILITY_H, ABILITY_W, INT_L, ABILITY_C,
-                 "Intelligence", score, mod, COLOR_PAIR(CYAN)};
-  if (namedBox(sheet, intBox) < 0)
-    return -1;
-
-  sprintf(score, "%d", c.ability[Wis]);
-  sprintf(mod, "%+d", c.abilityMod[Wis]);
-  NBOX wisBox = {ABILITY_H, ABILITY_W, WIS_L, ABILITY_C,
-                 "Wisdom", score, mod, COLOR_PAIR(BLUE)};
-  if (namedBox(sheet, wisBox) < 0)
-    return -1;
-
-  sprintf(score, "%d", c.ability[Cha]);
-  sprintf(mod, "%+d", c.abilityMod[Cha]);
-  NBOX chaBox = {ABILITY_H, ABILITY_W, CHA_L, ABILITY_C,
-                 "Charisma", score, mod, COLOR_PAIR(MAGENTA)};
-  if (namedBox(sheet, chaBox) < 0)
-    return -1;
+  for (i = 0; i < 6; i++) {
+    sprintf(score, "%d", c.ability[i]);
+    sprintf(mod, "%+d", c.abilityMod[i]);
+    NBOX box = {ABILITY_H, ABILITY_W, ABILITY_L+i*3, ABILITY_C,
+                   abil[i], score, mod, COLOR_PAIR(abilColor[i])};
+    if (namedBox(sheet, box) < 0)
+      return -1;
+  }
 
   return 0;
 }
@@ -213,6 +218,8 @@ static int initSkill(void)
 
 static int initVital(void)
 {
+  char val[4];
+
   NBOX healthBox = {HEALTH_H, HEALTH_W, HEALTH_L, HEALTH_C,
     "Health", NULL, NULL, COLOR_PAIR(RED)};
   if (namedBox(sheet, healthBox) < 0) return -1;
@@ -220,6 +227,50 @@ static int initVital(void)
   mvwprintw(sheet, HEALTH_L+1, HEALTH_C+3, "%3d  /  %-3d  |  %-2d",
      c.currHP, c.maxHP, c.tempHP);
 
+  NBOX battleBox = {BATTLE_H, BATTLE_W, BATTLE_L, BATTLE_C,
+    "AC", NULL, NULL, COLOR_PAIR(WHITE)};
+  if (namedBox(sheet, battleBox) < 0) return -1;
+  mvwprintw(sheet, BATTLE_L, BATTLE_C+10, "Init");
+  mvwprintw(sheet, BATTLE_L, BATTLE_C+19, "Spd");
+  mvwprintw(sheet, BATTLE_L+1, BATTLE_C+3, "%d  |   %+d   |  %d",
+      c.armor, c.initiative, c.speed);
+
+  sprintf(val, "%d", c.level & 0x3F);
+  NBOX hitBox = {HITDIE_H, HITDIE_W, HITDIE_L, HITDIE_C,
+    "Hit Die", val, NULL, COLOR_PAIR(WHITE)};
+  if (namedBox(sheet, hitBox) < 0) return -1;
+  mvwprintw(sheet, HITDIE_L+1, HITDIE_C+5, "d%d", c.hitDie);
+
+  NBOX deathBox = {DEATH_H, DEATH_W, DEATH_L, DEATH_C,
+    "Death", "Saves", "ooo  ooo", COLOR_PAIR(WHITE)};
+  if (namedBox(sheet, deathBox) < 0) return -1;
+  wattron(sheet, COLOR_PAIR(RED));
+  mvwprintw(sheet, DEATH_L+1, DEATH_C+2, "%.*s", (c.deathSave>>2) & 0x3, "ooo");
+  wattroff(sheet, COLOR_PAIR(RED));
+  wattron(sheet, COLOR_PAIR(GREEN));
+  mvwprintw(sheet, DEATH_L+1, DEATH_C+7, "%.*s", c.deathSave & 0x3, "ooo");
+  wattroff(sheet, COLOR_PAIR(GREEN));
+
+  return 0;
+}
+
+static int initSpell(void)
+{
+  char val[4];
+
+  NBOX castBox = {SPLCST_H, SPLCST_W, SPLCST_L, SPLCST_C,
+    "Spellcasting", NULL, c.castingAbil, COLOR_PAIR(WHITE)};
+  if (namedBox(sheet, castBox) < 0) return -1;
+
+  sprintf(val, "%d", c.spellSave & 0x3F);
+  NBOX saveBox = {SPLSAV_H, SPLSAV_W, SPLSAV_L, SPLSAV_C,
+    "Spell Save", "DC", val, COLOR_PAIR(WHITE)};
+  if (namedBox(sheet, saveBox) < 0) return -1;
+
+  sprintf(val, "%+d", c.spellAttack & 0x3F);
+  NBOX attackBox = {SPLATK_H, SPLATK_W, SPLATK_L, SPLATK_C,
+    "Spell Attack", "Bonus", val, COLOR_PAIR(WHITE)};
+  if (namedBox(sheet, attackBox) < 0) return -1;
 
   return 0;
 }
@@ -255,6 +306,9 @@ static int initSheet(void)
 
   /* Vitality */
   if (initVital() < 0) return -1;
+
+  /* Spell */
+  if (initSpell() < 0) return -1;
 
   return 0;
 }

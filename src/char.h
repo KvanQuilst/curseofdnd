@@ -12,6 +12,8 @@ enum ability_type {
   Str, Dex, Con, Int, Wis, Cha 
 };
 
+extern char *abilityString[NUM_ABILITY];
+
 enum skill_type {
   acrobatics, animalHandling, arcana, atheletics, deception, history,
   insight, intimidation, investigation, medicine, nature, perception,
@@ -52,4 +54,9 @@ extern struct character {
   short speed;
   short hitDie;
   short deathSave;
+
+  /* Spell Casting */
+  char *castingAbil;
+  short spellSave;
+  short spellAttack;
 } c;
