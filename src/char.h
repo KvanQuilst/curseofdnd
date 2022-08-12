@@ -22,32 +22,34 @@ enum skill_type {
 extern enum ability_type skill_abil[];
 
 /* Player Details */
-extern char *name;
-extern char *race;
-extern char *background;
-extern char *alignment;
-extern char *charClass;
-extern char *playerName;
-extern short level;
-extern int xp;
+extern struct character {
+  char *name;
+  char *race;
+  char *background;
+  char *alignment;
+  char *charClass;
+  char *playerName;
+  short level;
+  int xp;
 
-/* Skills */
-extern int ability[NUM_ABILITY];
-extern int abilityMod[NUM_ABILITY];
-extern int saveThrow[NUM_ABILITY];
-extern int saveProf[NUM_ABILITY];
-extern int skill[NUM_SKILLS];
-extern int skillProf[NUM_SKILLS];
-extern int inspiration;
-extern int proficiency;
-extern int passWisdom;
+  /* Skills */
+  int ability[NUM_ABILITY];
+  int abilityMod[NUM_ABILITY];
+  int saveThrow[NUM_ABILITY];
+  int saveProf[NUM_ABILITY];
+  int skill[NUM_SKILLS];
+  int skillProf[NUM_SKILLS];
+  int inspiration;
+  int proficiency;
+  int passWisdom;
 
-/* Stats */
-extern short maxHP;
-extern short currHP;
-extern short tempHP;
-extern short armor;
-extern short initiative;
-extern short speed;
-extern short hitDie;
-extern short deathSave;
+  /* Stats */
+  short maxHP;
+  short currHP;
+  short tempHP;
+  short armor;
+  short initiative;
+  short speed;
+  short hitDie;
+  short deathSave;
+} c;

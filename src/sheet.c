@@ -54,47 +54,47 @@ static int initAbil(void)
   char score[4], mod[4];
 
   NBOX inspBox = {ABILITY_H, ABILITY_W, XNUM_L, ABILITY_C, 
-                  "Inspiration", NULL, inspiration == 1 ? "**" : "  ", WHITE};
+                  "Inspiration", NULL, c.inspiration == 1 ? "**" : "  ", WHITE};
   if (namedBox(sheet, inspBox) < 0)
     return -1;
 
-  sprintf(score, "%d", ability[Str]);
-  sprintf(mod, "%+d", abilityMod[Str]);
+  sprintf(score, "%d", c.ability[Str]);
+  sprintf(mod, "%+d", c.abilityMod[Str]);
   NBOX strBox = {ABILITY_H, ABILITY_W, STR_L, ABILITY_C,
                  "Strength", score, mod, COLOR_PAIR(RED)};
   if (namedBox(sheet, strBox) < 0)
     return -1;
 
-  sprintf(score, "%d", ability[Dex]);
-  sprintf(mod, "%+d", abilityMod[Dex]);
+  sprintf(score, "%d", c.ability[Dex]);
+  sprintf(mod, "%+d", c.abilityMod[Dex]);
   NBOX dexBox = {ABILITY_H, ABILITY_W, DEX_L, ABILITY_C,
                  "Dexterity", score, mod, COLOR_PAIR(GREEN)};
   if (namedBox(sheet, dexBox) < 0)
     return -1;
 
-  sprintf(score, "%d", ability[Con]);
-  sprintf(mod, "%+d", abilityMod[Con]);
+  sprintf(score, "%d", c.ability[Con]);
+  sprintf(mod, "%+d", c.abilityMod[Con]);
   NBOX conBox = {ABILITY_H, ABILITY_W, CON_L, ABILITY_C,
                  "Constitution", score, mod, COLOR_PAIR(YELLOW)};
   if (namedBox(sheet, conBox) < 0)
     return -1;
 
-  sprintf(score, "%d", ability[Int]);
-  sprintf(mod, "%+d", abilityMod[Int]);
+  sprintf(score, "%d", c.ability[Int]);
+  sprintf(mod, "%+d", c.abilityMod[Int]);
   NBOX intBox = {ABILITY_H, ABILITY_W, INT_L, ABILITY_C,
                  "Intelligence", score, mod, COLOR_PAIR(CYAN)};
   if (namedBox(sheet, intBox) < 0)
     return -1;
 
-  sprintf(score, "%d", ability[Wis]);
-  sprintf(mod, "%+d", abilityMod[Wis]);
+  sprintf(score, "%d", c.ability[Wis]);
+  sprintf(mod, "%+d", c.abilityMod[Wis]);
   NBOX wisBox = {ABILITY_H, ABILITY_W, WIS_L, ABILITY_C,
                  "Wisdom", score, mod, COLOR_PAIR(BLUE)};
   if (namedBox(sheet, wisBox) < 0)
     return -1;
 
-  sprintf(score, "%d", ability[Cha]);
-  sprintf(mod, "%+d", abilityMod[Cha]);
+  sprintf(score, "%d", c.ability[Cha]);
+  sprintf(mod, "%+d", c.abilityMod[Cha]);
   NBOX chaBox = {ABILITY_H, ABILITY_W, CHA_L, ABILITY_C,
                  "Charisma", score, mod, COLOR_PAIR(MAGENTA)};
   if (namedBox(sheet, chaBox) < 0)
@@ -105,9 +105,9 @@ static int initAbil(void)
 
 static char *profCharSkill(enum skill_type skill) 
 {
-  if (skillProf[skill] == 0)
+  if (c.skillProf[skill] == 0)
     return "  ";
-  if (skillProf[skill] == 1)
+  if (c.skillProf[skill] == 1)
     return "* ";
   return "**";
 }
@@ -150,12 +150,12 @@ static int initSkill(void)
     BLUE, BLUE, MAGENTA, GREEN, BLUE}
   };
 
-  sprintf(val, "%+d", proficiency);
+  sprintf(val, "%+d", c.proficiency);
   NBOX profBox = {ABILITY_H, ABILITY_W, XNUM_L, PROF_C,
                   "Proficiency", NULL, val, COLOR_PAIR(WHITE)};
   if (namedBox(sheet, profBox) < 0) return -1;
 
-  sprintf(val, "%d", passWisdom);
+  sprintf(val, "%d", c.passWisdom);
   NBOX percBox = {ABILITY_H, ABILITY_W, XNUM_L, PASSW_C,
                   "Passive Wisdom", NULL, val, COLOR_PAIR(BLUE)};
   if (namedBox(sheet, percBox) < 0) return -1;
@@ -169,7 +169,7 @@ static int initSkill(void)
   /* Left Side */
   for (i = 0; i < 3; i++) {
     mvwprintw(sheet, SAVE_L+i+1, SKILL_C+2, "%s  %+d",
-        saveProf[i] == 1 ? "*" : " ", saveThrow[i]);
+        c.saveProf[i] == 1 ? "*" : " ", c.saveThrow[i]);
     wattron(sheet, COLOR_PAIR(saveColor[0][i]));
     mvwprintw(sheet, SAVE_L+i+1, SKILL_C+9, "%s", save[0][i]);
     wattroff(sheet, COLOR_PAIR(saveColor[0][i]));
@@ -178,7 +178,7 @@ static int initSkill(void)
   /* Right Side */
   for (i = 0; i < 3; i++) {
     mvwprintw(sheet, SAVE_L+i+1, SKILL_C+30, "%s  %+d",
-        saveProf[i+3] == 1 ? "*" : " ", saveThrow[i+3]);
+        c.saveProf[i+3] == 1 ? "*" : " ", c.saveThrow[i+3]);
     wattron(sheet, COLOR_PAIR(saveColor[1][i]));
     mvwprintw(sheet, SAVE_L+i+1, SKILL_C+37, "%s", save[1][i]);
     wattroff(sheet, COLOR_PAIR(saveColor[1][i]));
@@ -193,7 +193,7 @@ static int initSkill(void)
   /* Left Side */
   for (i = 0; i < 9; i++) {
     mvwprintw(sheet, SKILL_L+i+1, SKILL_C+2, "%s %+d  %s", 
-        profCharSkill(i*2), skill[i*2], skills[0][i]);
+        profCharSkill(i*2), c.skill[i*2], skills[0][i]);
     wattron(sheet, COLOR_PAIR(skillColor[0][i]));
     mvwprintw(sheet, SKILL_L+i+1, SKILL_C+25, "%s", abil[0][i]);
     wattroff(sheet, COLOR_PAIR(skillColor[0][i]));
@@ -202,7 +202,7 @@ static int initSkill(void)
   /* Right Side */
   for (i = 0; i < 9; i++) {
     mvwprintw(sheet, SKILL_L+i+1, SKILL_C+30, "%s %+d  %s", 
-        profCharSkill(i*2+1), skill[i*2+1], skills[1][i]);
+        profCharSkill(i*2+1), c.skill[i*2+1], skills[1][i]);
     wattron(sheet, COLOR_PAIR(skillColor[1][i]));
     mvwprintw(sheet, SKILL_L+i+1, SKILL_C+53, "%s", abil[1][i]);
     wattroff(sheet, COLOR_PAIR(skillColor[1][i]));
@@ -218,7 +218,7 @@ static int initVital(void)
   if (namedBox(sheet, healthBox) < 0) return -1;
   mvwprintw(sheet, HEALTH_L, HEALTH_C+18, "Temp");
   mvwprintw(sheet, HEALTH_L+1, HEALTH_C+3, "%3d  /  %-3d  |  %-2d",
-     currHP, maxHP, tempHP);
+     c.currHP, c.maxHP, c.tempHP);
 
 
   return 0;
@@ -231,7 +231,7 @@ static int initSheet(void)
   const int CHARBOX_C2 = CHARBOX_C1 + fieldSize + 2;
   const int CHARBOX_C3 = CHARBOX_C2 + fieldSize + 2;
   char *classTrim = malloc((fieldSize-9) * sizeof(char));
-  snprintf(classTrim, fieldSize-10, "%s", charClass);
+  snprintf(classTrim, fieldSize-10, "%s", c.charClass);
 
   sheet = newwin(rowSize, colSize, 0, 0);
 
@@ -239,13 +239,13 @@ static int initSheet(void)
   NBOX charBox = {CHARBOX_H, colSize, 0, 0, title, NULL, NULL, COLOR_PAIR(WHITE)};
   if (namedBox(sheet, charBox) < 0)
     return -1;
-  mvwprintw(sheet, CHARNAME_L, CHARNAME_C, "%s", name);
-  mvwprintw(sheet, CHARBOX_L1, CHARBOX_C1, "Class: %s %d", classTrim, level);
-  mvwprintw(sheet, CHARBOX_L2, CHARBOX_C1, "Race:  %-*s", fieldSize-7, race);
-  mvwprintw(sheet, CHARBOX_L1, CHARBOX_C2, "Background: %-*s", fieldSize-12, background);
-  mvwprintw(sheet, CHARBOX_L2, CHARBOX_C2, "Experience: %-*d", fieldSize-12, xp);
-  mvwprintw(sheet, CHARBOX_L1, CHARBOX_C3, "Player Name: %-*s", fieldSize-13, playerName);
-  mvwprintw(sheet, CHARBOX_L2, CHARBOX_C3, "Alignment:   %-*s", fieldSize-13, alignment);
+  mvwprintw(sheet, CHARNAME_L, CHARNAME_C, "%s", c.name);
+  mvwprintw(sheet, CHARBOX_L1, CHARBOX_C1, "Class: %s %d", classTrim, c.level);
+  mvwprintw(sheet, CHARBOX_L2, CHARBOX_C1, "Race:  %-*s", fieldSize-7, c.race);
+  mvwprintw(sheet, CHARBOX_L1, CHARBOX_C2, "Background: %-*s", fieldSize-12, c.background);
+  mvwprintw(sheet, CHARBOX_L2, CHARBOX_C2, "Experience: %-*d", fieldSize-12, c.xp);
+  mvwprintw(sheet, CHARBOX_L1, CHARBOX_C3, "Player Name: %-*s", fieldSize-13, c.playerName);
+  mvwprintw(sheet, CHARBOX_L2, CHARBOX_C3, "Alignment:   %-*s", fieldSize-13, c.alignment);
 
   /* Abilities */
   if (initAbil() < 0) return -1;

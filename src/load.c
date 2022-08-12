@@ -35,53 +35,29 @@
 #define jHITDIE "hitDie"
 #define jDEATHSAVE "deathSaves"
 
-char *name;
-char *playerName;
-char *race;
-char *charClass;
-char *background;
-char *alignment;
-short level;
-int xp;
-
-int ability[NUM_ABILITY];
-int abilityMod[NUM_ABILITY];
-int saveThrow[NUM_ABILITY];
-int saveProf[NUM_ABILITY];
-int skill[NUM_SKILLS];
-int skillProf[NUM_SKILLS];
-int inspiration;
-int proficiency;
-int passWisdom;
-
-short maxHP, currHP, tempHP;
-short armor;
-short initiative;
-short speed;
-short hitDie;
-short deathSave;
+struct character c;
 
 static void calculateChar(void)
 {
   int i;
 
   /* Calculate Proficiency */
-  proficiency = (level-1)/4 + 2;
+  c.proficiency = (c.level-1)/4 + 2;
 
   /* Calculate Abiltiy Modifiers */
   for (i = 0; i < NUM_ABILITY; i++) {
-    abilityMod[i] = ability[i]/2-5;
+    c.abilityMod[i] = c.ability[i]/2-5;
   }
 
   /* Calculate Saving Throws */
   for (i = 0; i < NUM_ABILITY; i++)
-    saveThrow[i] = abilityMod[i] + proficiency * saveProf[i];
+    c.saveThrow[i] = c.abilityMod[i] + c.proficiency * c.saveProf[i];
 
   /* Calculate Skill Scores */
   for (i = 0; i < NUM_SKILLS; i++)
-    skill[i] = abilityMod[skill_abil[i]] + proficiency * skillProf[i];
+    c.skill[i] = c.abilityMod[skill_abil[i]] + c.proficiency * c.skillProf[i];
 
-  passWisdom = 10 + proficiency + abilityMod[Wis];
+  c.passWisdom = 10 + c.proficiency + c.abilityMod[Wis];
 }
 
 /* Get a string field from an object */
@@ -197,47 +173,47 @@ int load(char *path)
   }
 
   /* Character Name */
-  if (getShortStringField(object, jNAME, &name) < 0) {
+  if (getShortStringField(object, jNAME, &c.name) < 0) {
     log_print("[ERROR] Failed to get character name!");
     return -1;
   }
 
   /* Player Name */
-  if (getShortStringField(object, jPLAYERNAME, &playerName) < 0) {
+  if (getShortStringField(object, jPLAYERNAME, &c.playerName) < 0) {
     log_print("[ERROR] Failed to get player name!");
     return -1;
   }
 
   /* Race */
-  if (getShortStringField(object, jRACE, &race) < 0) {
+  if (getShortStringField(object, jRACE, &c.race) < 0) {
     log_print("[ERROR] Failed to get character race!");
     return -1;
   }
 
   /* Class */
-  if (getShortStringField(object, jCLASS, &charClass) < 0) {
+  if (getShortStringField(object, jCLASS, &c.charClass) < 0) {
     log_print("[ERROR] Failed to get character class!");
     return -1;
   }
 
   /* Background */
-  if (getShortStringField(object, jBACKGROUND, &background) < 0) {
+  if (getShortStringField(object, jBACKGROUND, &c.background) < 0) {
     log_print("[ERROR] Failed to get character background!");
     return -1;
   }
 
   /* Alignment */
-  if (getShortStringField(object, jALIGNMENT, &alignment) < 0) {
+  if (getShortStringField(object, jALIGNMENT, &c.alignment) < 0) {
     log_print("[ERROR] Failed to get character alignment!");
     return -1;
   }
 
   /* Level */
-  if (getIntField(object, jLEVEL, (int *) &level) < 0) {
+  if (getIntField(object, jLEVEL, (int *) &c.level) < 0) {
     log_print("[ERROR] Failed to get character level!");
     return -1;
   }
-/* Experience */ if (getIntField(object, jXP, &xp) < 0) {
+/* Experience */ if (getIntField(object, jXP, &c.xp) < 0) {
     log_print("[ERROR] Failed to get chracter experience!");
     return -1;
   }
@@ -253,25 +229,25 @@ int load(char *path)
   }
 
   /* Ability */
-  if (getIntArrayField(object, jABILITY, &ability, NUM_ABILITY) < 0) {
+  if (getIntArrayField(object, jABILITY, &c.ability, NUM_ABILITY) < 0) {
     log_print("[ERROR] Failed to get ability scores!");
     return -1;
   }
 
   /* Skills Proficiency */
-  if (getIntArrayField(object, jSKILLPROF, &skillProf, NUM_SKILLS) < 0) {
+  if (getIntArrayField(object, jSKILLPROF, &c.skillProf, NUM_SKILLS) < 0) {
     log_print("[ERROR] Failed to get skill proficiencies!");
     return -1;
   }
 
   /* Save Proficiecny */
-  if (getIntArrayField(object, jSAVEPROF, &saveProf, NUM_ABILITY) < 0) {
+  if (getIntArrayField(object, jSAVEPROF, &c.saveProf, NUM_ABILITY) < 0) {
     log_print("[ERROR] Failed to get saving throw proficiencies!");
     return -1;
   }
 
   /* Inspiration */
-  if (getBoolField(object, jINSPIRATION, &inspiration) < 0) {
+  if (getBoolField(object, jINSPIRATION, &c.inspiration) < 0) {
     log_print("[ERROR] Failed to get inspiration!");
     return -1;
   }
@@ -286,56 +262,56 @@ int load(char *path)
   }
 
   /* Max HP */
-  if (getIntField(object, jMAXHP, (int *) &maxHP) < 0) {
+  if (getIntField(object, jMAXHP, (int *) &c.maxHP) < 0) {
     log_print("[ERROR] Failed to get max HP!");
     return -1;
   }
 
   /* Current HP */
-  if (getIntField(object, jCURRHP, (int *) &currHP) < 0) {
+  if (getIntField(object, jCURRHP, (int *) &c.currHP) < 0) {
     log_print("[ERROR] Failed to get current HP!");
     return -1;
   }
 
   /* Temporary HP */
-  if (getIntField(object, jTEMPHP, (int *) &tempHP) < 0) {
+  if (getIntField(object, jTEMPHP, (int *) &c.tempHP) < 0) {
     log_print("[ERROR] Failed to get temporary HP!");
     return -1;
   }
 
   /* AC */
-  if (getIntField(object, jAC, (int *) &armor) < 0) {
+  if (getIntField(object, jAC, (int *) &c.armor) < 0) {
     log_print("[ERROR] Failed to get armor class!");
     return -1;
   }
 
   /* Initiative */
-  if (getIntField(object, jINIT, (int *) &initiative) < 0) {
+  if (getIntField(object, jINIT, (int *) &c.initiative) < 0) {
     log_print("[ERROR] Failed to get initiative!");
     return -1;
   }
 
   /* Speed */
-  if (getIntField(object, jSPEED, (int *) &speed) < 0) {
+  if (getIntField(object, jSPEED, (int *) &c.speed) < 0) {
     log_print("[ERROR] Failed to get the speed!");
     return -1;
   }
 
   /* Hit Die */
-  if (getIntField(object, jHITDIE, (int *) &hitDie) < 0) {
+  if (getIntField(object, jHITDIE, (int *) &c.hitDie) < 0) {
     log_print("[ERROR] Failed to get hit die!");
     return -1;
   }
 
   /* Death Saves */
-  if (getIntField(object, jDEATHSAVE, (int *) &deathSave) < 0) {
+  if (getIntField(object, jDEATHSAVE, (int *) &c.deathSave) < 0) {
     log_print("[ERROR] Failed to get death save status!");
     return -1;
   }
 
   calculateChar();
   
-  log_print("Character sheet <%s> successfully loaded!", name);
+  log_print("Character sheet <%s> successfully loaded!", c.name);
   return 0;
 }
 
