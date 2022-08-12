@@ -153,7 +153,6 @@ static int getIntArrayField(json_object *object, const char *fieldName,
 {
   json_object *field;
   json_object *num;
-  array_list *arr;
   size_t size, i;
 
   if (object == NULL || !json_object_is_type(object, json_type_object))
@@ -179,9 +178,6 @@ int load(char *path)
 {
   json_object *character;
   json_object *object;
-  json_object *field;
-  const char *tmp;
-  size_t len;
 
   /* Get the character save */
   character = json_object_from_file(path);
@@ -346,4 +342,5 @@ int load(char *path)
 int save()
 {
 
+  return 0;
 }

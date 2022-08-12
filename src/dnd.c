@@ -27,7 +27,6 @@ void sizeError(int row, int col)
 int main(int argc, char **argv)
 {
   setlocale(LC_ALL, "");
-  int row, col;
   int ch; 
   short running = 1, update = 0;
   

@@ -42,19 +42,6 @@ extern int inspiration;
 extern int proficiency;
 extern int passWisdom;
 
-extern short sStr;
-extern short sDex;
-extern short sCon;
-extern short sInt;
-extern short sWis;
-extern short sCha;
-extern short mStr;
-extern short mDex;
-extern short mCon;
-extern short mInt;
-extern short mWis;
-extern short mCha;
-
 /* Stats */
 extern short maxHP;
 extern short currHP;

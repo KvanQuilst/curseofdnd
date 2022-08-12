@@ -38,6 +38,16 @@
 #define SAVE_L  12
 #define SKILL_L 18
 
+/* Vital Positions */
+#define HEALTH_H 3
+#define HEALTH_W 24
+#define HEALTH_L 9
+#define HEALTH_C 78
+#define BATTLE_H 3
+#define BATTLE_W 24
+#define BATTLE_L 12
+#define BATTLE_C 78
+
 WINDOW *sheet;
 static int initAbil(void)
 {
@@ -203,6 +213,13 @@ static int initSkill(void)
 
 static int initVital(void)
 {
+  NBOX healthBox = {HEALTH_H, HEALTH_W, HEALTH_L, HEALTH_C,
+    "Health", NULL, NULL, COLOR_PAIR(RED)};
+  if (namedBox(sheet, healthBox) < 0) return -1;
+  mvwprintw(sheet, HEALTH_L, HEALTH_C+18, "Temp");
+  mvwprintw(sheet, HEALTH_L+1, HEALTH_C+3, "%3d  /  %-3d  |  %-2d",
+     currHP, maxHP, tempHP);
+
 
   return 0;
 }
