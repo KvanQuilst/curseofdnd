@@ -15,6 +15,5 @@ int drawHome(void);
 /*
  * Destroys the home view if it has been created
  *
- * returns: 0 on success, -1 on error
  */
-int destroyHome(void);
+void destroyHome(void);
