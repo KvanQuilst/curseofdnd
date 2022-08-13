@@ -99,16 +99,17 @@ static int initCharBox(void)
   const int c3 = c2 + fieldSize + 2;
   char *classTrim = malloc((fieldSize-9) * sizeof(char));
   snprintf(classTrim, fieldSize-10, "%s", c.charClass);
+  log_print("Check it %d", fieldSize);
 
   NBOX charBox = {CHARBOX_H, colSize, 0, 0, title, NULL, NULL, COLOR_PAIR(WHITE)};
   if (namedBox(sheet, charBox) < 0) return -1;
   mvwprintw(sheet, CHARBOX_L+4, CHARBOX_C+3, "%s", c.name);
   mvwprintw(sheet, CHARBOX_L+2, c1, "Class: %s %d", classTrim, c.level);
-  mvwprintw(sheet, CHARBOX_L+6, c1, "Race:  %-*s", fieldSize-7, c.race);
-  mvwprintw(sheet, CHARBOX_L+2, c2, "Background: %-*s", fieldSize-12, c.background);
+  mvwprintw(sheet, CHARBOX_L+6, c1, "Race:  %-.*s", fieldSize-7, c.race);
+  mvwprintw(sheet, CHARBOX_L+2, c2, "Background: %-.*s", fieldSize-12, c.background);
   mvwprintw(sheet, CHARBOX_L+6, c2, "Experience: %-*d", fieldSize-12, c.xp);
-  mvwprintw(sheet, CHARBOX_L+2, c3, "Player Name: %-*s", fieldSize-13, c.playerName);
-  mvwprintw(sheet, CHARBOX_L+6, c3, "Alignment:   %-*s", fieldSize-13, c.alignment);
+  mvwprintw(sheet, CHARBOX_L+2, c3, "Player Name: %-.*s", fieldSize-13, c.playerName);
+  mvwprintw(sheet, CHARBOX_L+6, c3, "Alignment:   %-.*s", fieldSize-13, c.alignment);
 
   return 0;
 }

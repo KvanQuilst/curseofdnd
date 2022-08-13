@@ -32,6 +32,7 @@ int updateExperience(void);
  */
 
 /* Character Box */
+/* NOTE: The character box is always as wide as the screen */
 #define CHARBOX_L 0
 #define CHARBOX_C 0
 
