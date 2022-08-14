@@ -36,25 +36,28 @@
     "deathSaves": 0
   },
 
-  "spells": [
-    {
-      "name": "Minor Illusion",
-      "school": "Illusion Cantrip",
-      "castTime": "1 action",
-      "range": "30 feet",
-      "components": "S, M (a bit of fleece)",
-      "duration": "1 minute",
-      "description": "You create a sound or an image of an object within range that lasts for the duration. The illusion also ends if you dismiss it as an action or cast this spell again."
-    },
+  "spellCasting": {
+    "ability": "Cha",
+    "spells": [
+      {
+        "name": "Minor Illusion",
+        "school": "Illusion Cantrip",
+        "castTime": "1 action",
+        "range": "30 feet",
+        "components": "S, M (a bit of fleece)",
+        "duration": "1 minute",
+        "description": "You create a sound or an image of an object within range that lasts for the duration. The illusion also ends if you dismiss it as an action or cast this spell again."
+      },
 
-    {
-      "name": "Invisibility",
-      "school": "2nd-Level Illusion",
-      "castTime": "1 action",
-      "range": "Touch",
-      "components": "V, S, M (an eyelash encased in gum arabic)",
-      "duration": "Concentration, up to 1 hour",
-      "description": "A creature you touch becomes invisible until the spell ends. Anything the target is wearing or carrying is also invisible. The spell ends when the target attacks or casts a spell."
-    }
-  ]  
+      {
+        "name": "Invisibility",
+        "school": "2nd-Level Illusion",
+        "castTime": "1 action",
+        "range": "Touch",
+        "components": "V, S, M (an eyelash encased in gum arabic)",
+        "duration": "Concentration, up to 1 hour",
+        "description": "A creature you touch becomes invisible until the spell ends. Anything the target is wearing or carrying is also invisible. The spell ends when the target attacks or casts a spell."
+      }
+    ]  
+  }
 }

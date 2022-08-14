@@ -296,7 +296,7 @@ static int initSpell(void)
   char val[4];
 
   NBOX castBox = {BOX_H, BOX_MED, SPLCST_L, SPLCST_C,
-    "Spellcasting", NULL, c.castingAbil, COLOR_PAIR(WHITE)};
+    "Spellcasting", NULL, abilityString[c.castingAbil], COLOR_PAIR(WHITE)};
   if (namedBox(sheet, castBox) < 0) return -1;
 
   sprintf(val, "%d", c.spellSave & 0x3F);

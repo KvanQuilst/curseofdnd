@@ -56,7 +56,7 @@ extern struct character {
   short deathSave;
 
   /* Spell Casting */
-  char *castingAbil;
+  enum ability_type castingAbil;
   short spellSave;
   short spellAttack;
 } c;
