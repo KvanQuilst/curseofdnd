@@ -10,7 +10,6 @@
 #include "include.h"
 #include "home.h"
 #include "sheet.h"
-#include "sea.h"
 #include "load.h"
 
 #define ctrl(x) ((x) & 0x1f)
@@ -52,10 +51,6 @@ int main(int argc, char **argv)
   drawSheet();
   drawHome();
   doupdate();
-  if (colSize < 102)
-    initSeaTabs();
-  else
-    initSeaTri();
 
   while (running) {
     ch = getch();
