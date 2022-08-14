@@ -9,8 +9,9 @@
 #include "draw.h"
 #include "include.h"
 #include "home.h"
-#include "sheet.h"
 #include "load.h"
+#include "menu.h"
+#include "sheet.h"
 
 #define ctrl(x) ((x) & 0x1f)
 
@@ -26,15 +27,17 @@ void sizeError(int row, int col)
 int main(int argc, char **argv)
 {
   setlocale(LC_ALL, "");
-  int ch; 
+  int ch;
   short running = 1, update = 0;
   
+  enum state {s_home, s_sheet, s_menu};
+  enum state s = s_home;
+
   APP_NAME = argv[0];
 
   log_init();
   log_print("Curse of DND is starting...");
 
-  enum {s_home, s_equip, s_detail};
   int state = s_home;
 
   if (load("../saves/gnommy_depp") < 0) {
@@ -48,48 +51,88 @@ int main(int argc, char **argv)
   if (rowSize < 30 || colSize < 102)
     sizeError(rowSize, colSize);
 
-  drawSheet();
+  /*drawMenu();
+  drawSheet();*/
   drawHome();
   doupdate();
 
   while (running) {
     ch = getch();
 
-    /* Grab Input */
-    switch (ch) {
+    /* Global Commands */
+    switch(ch) {
 
-      /* u : level up */
-      case 'u':
+    }
+
+    /* State Specific Commands */
+    switch(s) {
+
+      /* Home */
+      case s_home:
+        switch (ch) {
+         
+          /* Load sheet view */
+          case '2':
+            update = 1;
+            state = s_sheet;
+            break;
+
+          /* Quit */
+          case 'q':
+            running = 0;
+            break;
+
+        }
         break;
 
-      /* e : equipment attacks spells */
-      case '2':
-        update = 1;
-        state = state != s_home ? s_home : s_equip;
+      /* Main Sheet */
+      case s_sheet:
+        switch (ch) {
+
+          /* Open Menu */
+          case 'e':
+            update = 1;
+            state = s_menu;
+            break;
+
+          /* Quit to home menu */
+          case 'q':
+            update = 1;
+            state = s_home;
+            break;
+
+        }
         break;
 
-      /* l : load */
-      case 'l':
-        break;
+      /* Menu */
+      case s_menu:
+        switch (ch) {
+          
+          /* Close Menu */
+          case 'q':
+          case 'e':
+            update = 1;
+            state = s_sheet;
+            break;
 
-      /* s : save */
-      case 's':
+        }
         break;
-
-      /* q : quit */
-      case 'q':
-        running = 0;
-        break;
-
     }
 
     switch (state) {
       case s_home:
+        log_print("[INFO] State: Home");
         if (update) drawHome();
         break;
         
-      case s_equip:
+      case s_sheet:
+        log_print("[INFO] State: Sheet");
         if (update) drawSheet();
+        break;
+
+      case s_menu:
+        log_print("[INFO] State: Menu");
+        if (update) drawMenu();
         break;
     }
     doupdate();

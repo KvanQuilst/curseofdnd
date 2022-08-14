@@ -107,3 +107,8 @@ int updateExperience(void);
 /* Spell Attack */
 #define SPLATK_L 27
 #define SPLATK_C 81
+
+/* Notes */
+/* NOTE: The notes box always fills out to the right to the edge of the screen */
+#define NOTES_L 9
+#define NOTES_C 103 

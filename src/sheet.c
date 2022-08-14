@@ -20,6 +20,8 @@
 #define SKILL_W 58
 #define SAVE_H  6
 
+#define NOTES_H 21
+
 WINDOW *sheet;
 
 int updateHealth(void)
@@ -312,9 +314,22 @@ static int initSpell(void)
   return 0;
 }
 
+static int initNotes(void)
+{
+  NBOX noteBox = {NOTES_H, colSize-NOTES_C, NOTES_L, NOTES_C,
+    NULL, "Notes", NULL, COLOR_PAIR(WHITE)};
+  if (namedBox(sheet, noteBox) < 0) return -1;
+
+  return 0;
+}
+
 static int initSheet(void)
 {
   sheet = newwin(rowSize, colSize, 0, 0);
+  if (sheet == NULL) {
+    log_print("[ERROR] failed to create window <sheet>!");
+    return -1;
+  }
 
   /* Character Box */
   if (initCharBox() < 0) return -1;
@@ -330,6 +345,9 @@ static int initSheet(void)
 
   /* Spell */
   if (initSpell() < 0) return -1;
+
+  /* Notes */
+  if (initNotes() < 0) return -1;
 
   return 0;
 }
