@@ -4,8 +4,6 @@
  */
 #pragma once
 
-#include "common.h"
-
 /* 
  * Initializes the main sheet view if it has not been created yet
  * Brings forward the main sheet view on stdscr
@@ -18,13 +16,6 @@ int drawSheet(void);
  * Destroys the main sheet view if it has been created
  */
 void destroySheet(void);
-
-/*
- * State Machine for Sheet View
- *
- * returns: the current state of the machine
- */
-enum state sheetStateMachine(void);
 
 /* Update Element Functions */
 /* NOTE: To update for a level up, destroy and redraw the sheet */

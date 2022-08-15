@@ -13,5 +13,3 @@
 #define ctrl(x) ((x) & 0x1f)
 
 extern char *APP_NAME;
-
-enum state {s_quit, s_home, s_sheet, s_menu};

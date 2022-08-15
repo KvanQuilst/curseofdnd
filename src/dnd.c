@@ -2,14 +2,13 @@
  * Curse of DND - nCurses DND Character Sheet
  * dnd.c
  */
+
 #include <stdlib.h>
 
 #include "common.h"
 #include "draw.h"
-#include "home.h"
 #include "load.h"
-#include "menu.h"
-#include "sheet.h"
+#include "statemachine.h"
 
 char *APP_NAME;
 
@@ -42,6 +41,10 @@ int main(int argc, char **argv)
 
       case s_menu:
         s = menuStateMachine();
+        break;
+
+      case s_spell:
+        s = spellStateMachine();
         break;
 
       case s_quit:

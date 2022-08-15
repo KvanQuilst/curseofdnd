@@ -43,4 +43,5 @@ void log_print(const char *fmt, ...)
         APP_NAME, msg);
   } else 
     fprintf(logStream, "Error while logging message: Memory allocation failed\n");
+  fflush(logStream);
 }

@@ -5,8 +5,10 @@
 
 #include <stdlib.h>
 
+#include "common.h"
 #include "draw.h"
 #include "sheet.h"
+#include "statemachine.h"
 
 #define CHARBOX_H  9
 

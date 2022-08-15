@@ -5,7 +5,7 @@
 
 #include "common.h"
 #include "draw.h"
-#include "menu.h"
+#include "statemachine.h"
 
 #define MENU_W 24
 
@@ -71,6 +71,11 @@ enum state menuStateMachine(void)
     case 'q':
     case 'e':
       s = s_sheet;
+      break;
+
+    /* Spell Casting */
+    case '2':
+      s = s_spell;
       break;
 
     /* Quit to home menu */

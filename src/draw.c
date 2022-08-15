@@ -27,7 +27,7 @@ int initCurses(void)
   getmaxyx(stdscr, rowSize, colSize);
   if (rowSize < SCRMAX_H || colSize < SCRMAX_W) {
     endwin();
-    fprintf(stderr, "[ERROR] your terminal is too small!\n");
+    fprintf(stderr, "Your terminal is too small!\n");
     log_print("[ERROR] your terminal is too small!");
     return -1;
   }
@@ -35,7 +35,6 @@ int initCurses(void)
   /* General Settings */
   curs_set(0);
   keypad(stdscr, TRUE);
-//  cbreak();
   raw();
   noecho();
   nonl();

@@ -6,6 +6,7 @@
 #include "common.h"
 #include "draw.h"
 #include "sheet.h"
+#include "statemachine.h"
 
 WINDOW *home;
 
@@ -34,7 +35,7 @@ static int initHome(void)
 
   home = newwin(rowSize, colSize, 0, 0);
   if (home == NULL) {
-    log_print("[ERROR]: failed to create new window \"home\"!");
+    log_print("[ERROR] failed to create new window \"home\"!");
     return -1;
   }
 
