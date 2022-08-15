@@ -5,6 +5,7 @@
 
 #include "common.h"
 #include "draw.h"
+#include "sheet.h"
 
 WINDOW *home;
 
@@ -82,4 +83,33 @@ void destroyHome(void)
 {
   if (home != NULL)
     delwin(home);
+}
+
+enum state homeStateMachine(void)
+{
+  int ch;
+  enum state s = s_home;
+
+  if (drawHome() < 0) { 
+    fprintf(stderr, "Error while drawing window!\n");
+    return s_quit;
+  }
+  doupdate();
+
+  ch = getch();
+  
+  switch (ch) {
+
+    /* Load sheet view */
+    case '2':
+      s = s_sheet;
+      break;
+
+    /* Quit */
+    case ctrl('q'):
+      s = s_quit;
+      break;
+  }
+
+  return s;
 }

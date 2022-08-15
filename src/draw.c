@@ -3,16 +3,32 @@
  * draw.c
  */
 
+#include <locale.h>
+
 #include "common.h"
 #include "draw.h"
+
+#define SCRMAX_H 30
+#define SCRMAX_W 102
 
 int rowSize, colSize;
 
 int initCurses(void)
 {
+  setlocale(LC_ALL, "");
+
   initscr();
   if (stdscr == NULL) {
-    log_print("[ERROR]: stdscr could not be initialized!");
+    fprintf(stderr, "Failed to start app\n");
+    log_print("[ERROR] stdscr could not be initialized!");
+    return -1;
+  }
+
+  getmaxyx(stdscr, rowSize, colSize);
+  if (rowSize < SCRMAX_H || colSize < SCRMAX_W) {
+    endwin();
+    fprintf(stderr, "[ERROR] your terminal is too small!\n");
+    log_print("[ERROR] your terminal is too small!");
     return -1;
   }
 
@@ -38,13 +54,15 @@ int initCurses(void)
   init_pair(MAGENTA, COLOR_MAGENTA, -1);
   init_pair(BLACK, COLOR_BLACK, -1);
 
-  getmaxyx(stdscr, rowSize, colSize);
-
   return 0;
 }
 
-int makeBox(WINDOW *win, int nlines, int ncols, 
-    int begin_y, int begin_x)
+void killCurses(void)
+{
+  if (stdscr) endwin();
+}
+
+int makeBox(WINDOW *win, int nlines, int ncols, int begin_y, int begin_x)
 {
   if (stdscr == NULL) {
     log_print("[ERROR]: stdscr is NULL; can't write to the screen!");

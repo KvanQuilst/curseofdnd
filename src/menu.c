@@ -51,3 +51,33 @@ void destroyMenu(void)
   if (menu != NULL)
     delwin(menu);
 }
+
+enum state menuStateMachine(void)
+{
+  int ch;
+  enum state s = s_menu;
+
+  if (drawMenu() < 0) { 
+    fprintf(stderr, "Error while drawing window!\n");
+    return s_quit;
+  }
+  doupdate();
+
+  ch = getch();
+  
+  switch (ch) {
+          
+    /* Close Menu */
+    case 'q':
+    case 'e':
+      s = s_sheet;
+      break;
+
+    /* Quit to home menu */
+    case ctrl('q'):
+      s = s_home;
+      break;
+  }
+
+  return s;
+}

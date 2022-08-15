@@ -5,7 +5,6 @@
 
 #include <stdlib.h>
 
-#include "common.h"
 #include "draw.h"
 #include "sheet.h"
 
@@ -350,7 +349,7 @@ static int initSheet(void)
 
   /* Help Text */
   wattron(sheet, COLOR_PAIR(BLUE));
-  mvwprintw(sheet, rowSize-2, 2, "Menu - e\tHome - q");
+  mvwprintw(sheet, rowSize-2, 2, "Menu - e\tHome - ctrl-q");
   wattroff(sheet, COLOR_PAIR(BLUE));
 
   return 0;
@@ -377,4 +376,33 @@ void destroySheet(void)
 {
   if (sheet != NULL)
     delwin(sheet);
+}
+
+enum state sheetStateMachine(void)
+{
+  int ch;
+  enum state s = s_sheet;
+
+  if (drawSheet() < 0) {
+    fprintf(stderr, "Error while drawing window!\n");
+    return s_quit;
+  }
+  doupdate();
+
+  ch = getch();
+
+  switch (ch) {
+
+    /* Open Menu */
+    case 'e':
+      s = s_menu;
+      break;
+
+    /* Quit to home menu */
+    case ctrl('q'):
+      s = s_home;
+      break;
+  }
+
+  return s;
 }
