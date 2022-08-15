@@ -38,8 +38,6 @@ int main(int argc, char **argv)
   log_init();
   log_print("Curse of DND is starting...");
 
-  int state = s_home;
-
   if (load("../saves/gnommy_depp") < 0) {
     exit(1);
   }
@@ -59,9 +57,11 @@ int main(int argc, char **argv)
   while (running) {
     ch = getch();
 
+    //log_print("'%c' pressed!", ch);
+
     /* Global Commands */
     switch(ch) {
-
+      
     }
 
     /* State Specific Commands */
@@ -74,11 +74,11 @@ int main(int argc, char **argv)
           /* Load sheet view */
           case '2':
             update = 1;
-            state = s_sheet;
+            s = s_sheet;
             break;
 
           /* Quit */
-          case 'q':
+          case ctrl('q'):
             running = 0;
             break;
 
@@ -92,13 +92,13 @@ int main(int argc, char **argv)
           /* Open Menu */
           case 'e':
             update = 1;
-            state = s_menu;
+            s = s_menu;
             break;
 
           /* Quit to home menu */
-          case 'q':
+          case ctrl('q'):
             update = 1;
-            state = s_home;
+            s = s_home;
             break;
 
         }
@@ -112,26 +112,32 @@ int main(int argc, char **argv)
           case 'q':
           case 'e':
             update = 1;
-            state = s_sheet;
+            s = s_sheet;
+            break;
+
+          /* Quit to home menu */
+          case ctrl('q'):
+            update = 1;
+            s = s_home;
             break;
 
         }
         break;
     }
 
-    switch (state) {
+    switch (s) {
       case s_home:
-        log_print("[INFO] State: Home");
+        //log_print("[INFO] State: Home");
         if (update) drawHome();
         break;
         
       case s_sheet:
-        log_print("[INFO] State: Sheet");
+        //log_print("[INFO] State: Sheet");
         if (update) drawSheet();
         break;
 
       case s_menu:
-        log_print("[INFO] State: Menu");
+        //log_print("[INFO] State: Menu");
         if (update) drawMenu();
         break;
     }

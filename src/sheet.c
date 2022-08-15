@@ -101,7 +101,6 @@ static int initCharBox(void)
   const int c3 = c2 + fieldSize + 2;
   char *classTrim = malloc((fieldSize-9) * sizeof(char));
   snprintf(classTrim, fieldSize-10, "%s", c.charClass);
-  log_print("Check it %d", fieldSize);
 
   NBOX charBox = {CHARBOX_H, colSize, 0, 0, title, NULL, NULL, COLOR_PAIR(WHITE)};
   if (namedBox(sheet, charBox) < 0) return -1;
@@ -348,6 +347,11 @@ static int initSheet(void)
 
   /* Notes */
   if (initNotes() < 0) return -1;
+
+  /* Help Text */
+  wattron(sheet, COLOR_PAIR(BLUE));
+  mvwprintw(sheet, rowSize-2, 2, "Menu - e\tHome - q");
+  wattroff(sheet, COLOR_PAIR(BLUE));
 
   return 0;
 }
