@@ -7,9 +7,6 @@
 #include "draw.h"
 #include "statemachine.h"
 
-#define SPELL_H 24
-#define SPELL_W 84
-
 WINDOW *spell;
 
 static int initSpell(void)
@@ -67,11 +64,15 @@ enum state spellStateMachine(void)
 
   switch (ch) {
     
-    /* Close Frame */
+    /* Return to Menu */
     case 'q':
       s = s_menu;
       break;
 
+    /* Quit to home menu */
+    case ctrl('q'):
+      s = s_home;
+      break;
   }
 
   return s;
