@@ -350,9 +350,10 @@ static int initSheet(void)
   if (initNotes() < 0) return -1;
 
   /* Help Text */
-  wattron(sheet, COLOR_PAIR(BLUE));
+  wattr_on(sheet, COLOR_PAIR(WHITE) | A_REVERSE, NULL);
+  mvwhline(sheet, rowSize-2, 0, ' ', colSize);
   mvwprintw(sheet, rowSize-2, 2, "Menu - e\tHome - ctrl-q");
-  wattroff(sheet, COLOR_PAIR(BLUE));
+  wattr_off(sheet, COLOR_PAIR(WHITE) | A_REVERSE, NULL);
 
   return 0;
 }

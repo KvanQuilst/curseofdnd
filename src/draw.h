@@ -56,3 +56,13 @@ int makeBox(WINDOW *win, int nlines, int ncols,
  * returns: 0 on success, -1 on error
  */
 int namedBox(WINDOW *win, NBOX box);
+
+/*
+ * Initialize a generic tabbed window
+ *
+ * @numTabs: The number of tabs across the top of the window. This number
+             should correspond to number of tabNames
+ * @tabNames: The name of each tab across the top
+ * returns: An intialized window with a generic tab structure drawn to it
+ */
+WINDOW *initTabWindow(int numTabs, const char *tabNames[]);

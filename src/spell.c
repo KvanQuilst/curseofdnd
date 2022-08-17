@@ -7,21 +7,20 @@
 #include "draw.h"
 #include "statemachine.h"
 
-#define SPELL_H 20
-#define SPELL_W 80
+#define SPELL_H 24
+#define SPELL_W 84
 
 WINDOW *spell;
 
 static int initSpell(void)
 {
-  spell = newwin(SPELL_H, SPELL_W, rowSize/2 - SPELL_H/2, colSize/2 - SPELL_W/2);
-  if (spell == NULL) {
-    log_print("[ERROR] failed to create new window \"spell\"!");
-    return -1;
-  }
+  const char *tabNames[] = {
+    "All", "1", "2", "3", "4", "5", "6", "7", "8", "9"
+  };
 
-  wborder(spell, ACS_VLINE, ACS_VLINE, ACS_HLINE, ACS_HLINE, 
-      ACS_ULCORNER, ACS_URCORNER, ACS_LLCORNER, ACS_LRCORNER);
+  spell = initTabWindow(10, tabNames);
+  if (spell == NULL)
+    return -1;
 
   return 0;
 }

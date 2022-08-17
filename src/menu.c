@@ -5,11 +5,34 @@
 
 #include "common.h"
 #include "draw.h"
+#include "menu.h"
 #include "statemachine.h"
 
-#define MENU_W 24
-
 WINDOW *menu;
+
+const char *select[] = {
+  "1. Equipment",
+  "2. Spell Casting",
+  "3. Features and Traits",
+  "4. Character Info",
+  "5. Help"
+};
+
+static void highlight(int line)
+{
+  wattr_on(menu, COLOR_PAIR(CYAN) | A_UNDERLINE, NULL);
+  mvwprintw(menu, line*2, 2, "%s", select[line-1]);
+  wattr_off(menu, COLOR_PAIR(CYAN) | A_UNDERLINE, NULL);
+}
+
+static void drawSelect(void) 
+{
+  int i;
+
+  for (i = 0; i < 5; i++) {
+    mvwprintw(menu, 2+i*2, 2, "%s", select[i]);
+  }
+}
 
 static int initMenu()
 {
@@ -20,11 +43,6 @@ static int initMenu()
   }
 
   mvwvline(menu, 0, 0, ACS_VLINE, rowSize);
-  mvwprintw(menu, 2, 2, "1. Equipment");
-  mvwprintw(menu, 4, 2, "2. Spell Casting");
-  mvwprintw(menu, 6, 2, "3. Features and Traits");
-  mvwprintw(menu, 8, 2, "4. Character Info");
-  mvwprintw(menu, 10, 2, "5. Help");
 
   return 0;
 }
@@ -39,6 +57,7 @@ int drawMenu(void)
   /* Initialize the window if it hasn't been, */
   /* check if initialization completed        */
   if (menu == NULL && initMenu()) return -1;
+  drawSelect();
 
   touchwin(menu);
   wnoutrefresh(menu);
@@ -75,6 +94,9 @@ enum state menuStateMachine(void)
 
     /* Spell Casting */
     case '2':
+      highlight(2);
+      wnoutrefresh(menu);
+      doupdate();
       s = s_spell;
       break;
 

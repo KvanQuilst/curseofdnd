@@ -4,6 +4,8 @@
  */
 #pragma once
 
+#define MENU_W 24
+
 /*
  * Initializes the menu view if it has not been created yet
  * Brings forward the menu home view on stdscr

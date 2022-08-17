@@ -9,7 +9,7 @@
 #include "draw.h"
 
 #define SCRMAX_H 30
-#define SCRMAX_W 102
+#define SCRMAX_W 104
 
 int rowSize, colSize;
 
