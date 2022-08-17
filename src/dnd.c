@@ -22,6 +22,7 @@ int main(int argc, char **argv)
   log_print("Curse of DND is starting...");
 
   if (load("../saves/gnommy_depp") < 0) {
+    fprintf(stderr, "An error occured. View the log for more info.\n");
     exit(1);
   }
 

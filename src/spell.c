@@ -7,7 +7,7 @@
 #include "draw.h"
 #include "statemachine.h"
 
-WINDOW *spell;
+TabWindow *spell;
 
 static int initSpell(void)
 {
@@ -15,7 +15,7 @@ static int initSpell(void)
     "All", "1", "2", "3", "4", "5", "6", "7", "8", "9"
   };
 
-  spell = initTabWindow(10, tabNames);
+  spell = initTabWindow(sizeof(tabNames)/sizeof(char*), tabNames);
   if (spell == NULL)
     return -1;
 
@@ -37,8 +37,8 @@ int drawSpell(void)
       return -1;
   }
 
-  touchwin(spell);
-  wnoutrefresh(spell);
+  touchwin(spell->win);
+  wnoutrefresh(spell->win);
 
   return 0;
 }
@@ -46,7 +46,7 @@ int drawSpell(void)
 void destroySpell(void)
 {
   if (spell != NULL)
-    delwin(spell);
+    destroyTabWindow(spell);
 }
 
 enum state spellStateMachine(void)

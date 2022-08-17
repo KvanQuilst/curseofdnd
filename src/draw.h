@@ -18,6 +18,12 @@ struct NBOX_st {
   enum color color;
 };
 
+typedef struct TabWindow_st TabWindow;
+struct TabWindow_st {
+  WINDOW *win;
+  int numTabs, tabSize, maxName;
+};
+
 /* Globals */
 extern int rowSize, colSize;
 
@@ -57,6 +63,11 @@ int makeBox(WINDOW *win, int nlines, int ncols,
  */
 int namedBox(WINDOW *win, NBOX box);
 
+/* 
+ * Tab Windows
+ */
+
+
 /*
  * Initialize a generic tabbed window
  *
@@ -65,4 +76,11 @@ int namedBox(WINDOW *win, NBOX box);
  * @tabNames: The name of each tab across the top
  * returns: An intialized window with a generic tab structure drawn to it
  */
-WINDOW *initTabWindow(int numTabs, const char *tabNames[]);
+TabWindow *initTabWindow(int numTabs, const char *tabNames[]);
+
+/*
+ * Destroy a TabWindow
+ *
+ * @tab: the TabWindow to be destroyed
+ */
+void destroyTabWindow(TabWindow *tab);
