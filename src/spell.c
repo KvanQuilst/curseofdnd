@@ -10,6 +10,16 @@
 TabWindow *spell;
 PANEL *spellPan;
 
+static int switchTabs(int i)
+{
+  int idx = i == 0 ? 10 : i - 1;
+
+  if (changeTabWindow(spell, idx) < 0)
+    return -1;
+
+  return 0;
+}
+
 static int initSpell(void)
 {
   const char *tabNames[] = {
@@ -67,8 +77,23 @@ enum state spellStateMachine(void)
   doupdate();
 
   ch = getch();
+  log_print("ch: %c %d", ch, ch);
 
   switch (ch) {
+
+    case '0':
+    case '1':
+    case '2':
+    case '3':
+    case '4':
+    case '5':
+    case '6':
+    case '7':
+    case '8':
+    case '9':
+      if (changeTabWindow(spell, ch == '0' ? 9 : ch - '1') < 0)
+        s = s_quit;
+      break;
     
     /* Return to Menu */
     case 'q':

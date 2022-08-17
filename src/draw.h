@@ -23,6 +23,7 @@ typedef struct TabWindow_st TabWindow;
 struct TabWindow_st {
   WINDOW *win;
   int numTabs, tabSize, maxName;
+  int currTab;
 };
 
 /* Globals */
@@ -64,10 +65,10 @@ int makeBox(WINDOW *win, int nlines, int ncols,
  */
 int namedBox(WINDOW *win, NBOX box);
 
+
 /* 
  * Tab Windows
  */
-
 
 /*
  * Initialize a generic tabbed window
@@ -85,3 +86,12 @@ TabWindow *initTabWindow(int numTabs, const char *tabNames[]);
  * @tab: the TabWindow to be destroyed
  */
 void destroyTabWindow(TabWindow *tab);
+
+/*
+ * Change the tab view to the provided 0-based tab number
+ *
+ * @tab: the TabWindow to change tabs on
+ * @tabIdx: the 0-based index to change the tab to
+ * returns: 0 on success, -1 on error
+ */
+int changeTabWindow(TabWindow *tab, int tabIdx);
