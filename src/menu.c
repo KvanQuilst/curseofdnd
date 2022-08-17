@@ -9,6 +9,7 @@
 #include "statemachine.h"
 
 WINDOW *menu;
+PANEL *menuPan;
 
 const char *select[] = {
   "1. Equipment",
@@ -42,6 +43,13 @@ static int initMenu()
     return -1;
   }
 
+  menuPan = new_panel(menu);
+  if (menuPan == NULL) {
+    log_print("[ERROR] failed to create window <menu>!");
+    delwin(menu);
+    return -1;
+  }
+
   mvwvline(menu, 0, 0, ACS_VLINE, rowSize);
 
   return 0;
@@ -54,13 +62,15 @@ int drawMenu(void)
     return -1;
   }
 
+  if (panel_hidden(menuPan))
+    show_panel(menuPan);
+
   /* Initialize the window if it hasn't been, */
   /* check if initialization completed        */
   if (menu == NULL && initMenu()) return -1;
   drawSelect();
 
-  touchwin(menu);
-  wnoutrefresh(menu);
+  update_panels();
 
   return 0;
 }
@@ -89,20 +99,14 @@ enum state menuStateMachine(void)
     /* Close Menu */
     case 'q':
     case 'e':
+      hide_panel(menuPan);
       s = s_sheet;
       break;
 
     /* Spell Casting */
     case '2':
       highlight(2);
-      wnoutrefresh(menu);
-      doupdate();
       s = s_spell;
-      break;
-
-    /* Quit to home menu */
-    case ctrl('q'):
-      s = s_home;
       break;
   }
 

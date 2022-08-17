@@ -4,6 +4,7 @@
  */
 
 #include <ncurses.h>
+#include <panel.h>
 #include <string.h>
 
 enum color {

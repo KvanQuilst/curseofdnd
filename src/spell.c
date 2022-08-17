@@ -8,6 +8,7 @@
 #include "statemachine.h"
 
 TabWindow *spell;
+PANEL *spellPan;
 
 static int initSpell(void)
 {
@@ -19,6 +20,13 @@ static int initSpell(void)
   if (spell == NULL)
     return -1;
 
+  spellPan = new_panel(spell->win);
+  if (spellPan == NULL) {
+    log_print("[ERROR] failed to create window <spell>!");
+    destroyTabWindow(spell);
+    return -1;
+  }
+
   return 0;
 }
 
@@ -29,16 +37,14 @@ int drawSpell(void)
     return -1;
   }
 
+  if (panel_hidden(spellPan))
+    show_panel(spellPan);
+
   /* Initialize the window if it hasn't been, */
   /* check if initialization completed        */
-  //if (spell == NULL && initSpell()) return -1;
-  if (spell == NULL) {
-    if (initSpell() < 0)
-      return -1;
-  }
+  if (spell == NULL && initSpell()) return -1;
 
-  touchwin(spell->win);
-  wnoutrefresh(spell->win);
+  update_panels();
 
   return 0;
 }
@@ -66,12 +72,8 @@ enum state spellStateMachine(void)
     
     /* Return to Menu */
     case 'q':
+      hide_panel(spellPan);
       s = s_menu;
-      break;
-
-    /* Quit to home menu */
-    case ctrl('q'):
-      s = s_home;
       break;
   }
 

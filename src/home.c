@@ -9,6 +9,7 @@
 #include "statemachine.h"
 
 WINDOW *home;
+PANEL *homePan;
 
 #define LOGO_W 74
 #define LOGO_H 13
@@ -36,6 +37,13 @@ static int initHome(void)
   home = newwin(rowSize, colSize, 0, 0);
   if (home == NULL) {
     log_print("[ERROR] failed to create new window \"home\"!");
+    return -1;
+  }
+
+  homePan = new_panel(home);
+  if (homePan == NULL) {
+    log_print("[ERROR] failed to create new window \"home\"!");
+    delwin(home);
     return -1;
   }
 
@@ -70,12 +78,14 @@ int drawHome(void)
     return -1;
   } 
 
+  if (panel_hidden(homePan))
+    show_panel(homePan);
+
   /* Initialize the window if it hasn't been, */
   /* check if initialization completed        */
   if (home == NULL && initHome()) return -1;
 
-  touchwin(home);
-  wnoutrefresh(home);
+  update_panels();
 
   return 0;
 }
@@ -103,6 +113,7 @@ enum state homeStateMachine(void)
 
     /* Load sheet view */
     case '2':
+      hide_panel(homePan);
       s = s_sheet;
       break;
 

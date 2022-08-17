@@ -24,6 +24,7 @@
 #define NOTES_H 21
 
 WINDOW *sheet;
+PANEL *sheetPan;
 
 int updateHealth(void)
 {
@@ -331,6 +332,13 @@ static int initSheet(void)
     return -1;
   }
 
+  sheetPan = new_panel(sheet);
+  if (sheetPan == NULL) {
+    log_print("[ERROR] failed to create window <sheet>!");
+    delwin(sheet);
+    return -1;
+  }
+
   /* Character Box */
   if (initCharBox() < 0) return -1;
 
@@ -365,12 +373,14 @@ int drawSheet(void)
     return -1;
   }
 
+  if (panel_hidden(sheetPan))
+    show_panel(sheetPan);
+
   /* Initialize the window if it hasn't been, */
   /* check if initialization completed        */
   if (sheet == NULL && initSheet()) return -1;
 
-  touchwin(sheet);
-  wnoutrefresh(sheet);
+  update_panels();
 
   return 0;
 }
@@ -403,6 +413,7 @@ enum state sheetStateMachine(void)
 
     /* Quit to home menu */
     case ctrl('q'):
+      hide_panel(sheetPan);
       s = s_home;
       break;
   }
