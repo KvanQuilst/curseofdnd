@@ -77,8 +77,6 @@ void destroyTabWindow(TabWindow *tab)
 
 int changeTabWindow(TabWindow *tab, int tabIdx)
 {
-  log_print("idx in change: %d", tabIdx);
-
   if (tab == NULL) {
     log_print("[ERROR] changeTabWindow: tab is NULL!");
     return -1;
@@ -87,7 +85,8 @@ int changeTabWindow(TabWindow *tab, int tabIdx)
   if (tabIdx == tab->currTab)
     return 0;
   if (tabIdx >= tab->numTabs) {
-    log_print("[ERROR] changeTabWindow: the tab index (%d) provided is larger than the number of tabs (%d)!",
+    log_print("[ERROR] changeTabWindow: the tab index (%d) provided \
+        is larger than the number of tabs (%d)!",
         tabIdx, tab->numTabs);
     return -1;
   }

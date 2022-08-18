@@ -76,6 +76,7 @@ int namedBox(WINDOW *win, NBOX box);
  * @numTabs: The number of tabs across the top of the window. This number
              should correspond to number of tabNames
  * @tabNames: The name of each tab across the top
+ * @startTab: The 0-based index that the window will start on
  * returns: An intialized window with a generic tab structure drawn to it
  */
 TabWindow *initTabWindow(int numTabs, const char *tabNames[]);
